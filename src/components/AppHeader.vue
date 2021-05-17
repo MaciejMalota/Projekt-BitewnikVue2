@@ -10,9 +10,11 @@
         <b-dropdown-item href="#">Account</b-dropdown-item>
         <b-dropdown-item href="#">Settings</b-dropdown-item>
       </b-nav-item-dropdown> -->
+       </b-navbar-nav>
 
-      <b-nav-item >
-        <b-form  class="form-inline my-2 my-lg-0 ml-auto">
+       <b-navbar-nav class="ml-auto">
+      <b-nav-item>
+        <b-form  class="form-inline my-2 my-lg-0">
             
           <b-form-input v-model="userId" :state="validation" id="login" placeholder="User login" ></b-form-input>
           
@@ -23,7 +25,6 @@
 
        </b-form>
      </b-nav-item>
-      
 
     </b-navbar-nav>
   </b-navbar>
@@ -50,6 +51,9 @@ export default {
 
 
 <style >
+#nav-item{
+  margin-right:80px;
+}
 #navvv{
   font-size:20px;
 }

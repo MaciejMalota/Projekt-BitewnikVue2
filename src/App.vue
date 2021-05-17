@@ -14,5 +14,7 @@ export default {
 </script>
 
 <style>
-
+html,body{
+  background-color: rgb(150, 149, 149);
+}
 </style>
