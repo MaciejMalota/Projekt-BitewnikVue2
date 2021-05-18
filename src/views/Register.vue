@@ -4,7 +4,7 @@
   <br>
     <form class ="siema">
      
-      <div class="white-text">
+      <div class="black-text">
        <p class="h4 text-center mb-4">Rejestracja Użytkownika</p>
         <mdb-input label="Imię" icon="user" type="text"/>
         <mdb-input label="Nazwisko" icon="user" type="text"/>
@@ -13,11 +13,11 @@
         <mdb-input label="Twój e-mail" icon="envelope" type="email"/>
         <mdb-input label="Potwierdź e-mail" icon="exclamation-triangle" type="text"/>
         <mdb-input label="Twoje hasło" icon="lock" type="password"/>
-        
+        <div class="text-center">
+          <mdb-btn color="success">Zarejestruj</mdb-btn>
+        </div>
       </div>
-      <div class="text-center">
-        <mdb-btn color="success">Zarejestruj</mdb-btn>
-      </div>
+     
     </form>
     <!-- Material form register -->
   </div>
@@ -29,25 +29,38 @@
     components: {
       mdbInput,
       mdbBtn
+    },
+    beforeCreate: function() {          // do body background w global.css
+        document.body.className = 'register';
     }
   }
 </script>
 <style>
-body,html{
-   background-image: url('https://images.contentstack.io/v3/assets/bltad9188aa9a70543a/blte06167f518dd1579/5f5c00ebfef72a4b5f96597f/01-Header.jpg?width=3200&height=1800');
-  background-repeat: no-repeat;
-  background-size: 100vw 100vh;
-}
-.white-text{
+.black-text{
+  border-radius: 25px;
   max-width:50vh;
   margin:auto;
+  padding:30px;
 }
-input::-webkit-input-placeholder {
-        color: red;
+.black-text {
+	/* other styles */
+	background: rgba(255, 255, 255, .7);
+	-webkit-backdrop-filter: blur(1px);
+	backdrop-filter: blur(1px);
 }
+  @-webkit-keyframes autofill {
+  to {
+  color: #666;
+  background: transparent; } }
 
-input:-moz-placeholder {
-        color: red;
-}
+  @keyframes autofill {
+  to {
+  color: #666;
+  background: transparent; } }
 
+  input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
 </style>

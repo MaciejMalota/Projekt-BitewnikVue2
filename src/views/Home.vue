@@ -3,10 +3,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
 
 export default {
   components: {
-  }
+  },
+  beforeCreate: function() {          // do body background w global.css
+        document.body.className = 'home';
+    }
 }
 </script>

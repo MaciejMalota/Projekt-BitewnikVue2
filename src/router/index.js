@@ -4,7 +4,7 @@ import Home from '/src/views/Home.vue'
 import Register from '/src/views/Register.vue'
 import Tournaments from '/src/views/Tournaments.vue'
 import Teams from '/src/views/Teams.vue'
-
+import '/src/assets/css/global.css';
 Vue.use(VueRouter)
 
 const routes = [
@@ -29,7 +29,6 @@ const routes = [
     component: Teams
   }
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
