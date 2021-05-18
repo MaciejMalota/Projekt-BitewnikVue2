@@ -1,20 +1,35 @@
 <template>
- <AppHeader/>
+
+  <div id="app">
+
+   <AppHeader />
+   <router-view></router-view>
+
+  </div>
+ 
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue'
-
 export default {
   name: 'App',
   components: {
     AppHeader
-  }
+  },
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    
+  },
+  computed: {
+    
+  },
 }
 </script>
 
 <style>
-html,body{
-  background-color: rgb(150, 149, 149);
-}
+
 </style>
