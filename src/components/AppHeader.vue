@@ -64,4 +64,7 @@ input{
   max-width:250px;
   margin-right: 10px !important;
 }
+button{
+  font-size:10px;
+}
 </style>
