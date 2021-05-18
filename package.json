@@ -6,17 +6,23 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve --open"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "bootstrap": "^5.0.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mdbootstrap": "^4.19.2",
     "mdbvue": "6.7.2",
+    "mongodb": "^3.6.7",
     "mongoose": "^5.12.10",
     "vue": "^2.6.12",
+    "vue-axios": "^3.2.4",
     "vue-router": "^3.5.1"
   },
   "devDependencies": {
@@ -27,6 +33,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "nodemon": "^2.0.7",
     "vue-cli-plugin-mdb": "~2.1.0",
     "vue-template-compiler": "^2.6.11"
   },

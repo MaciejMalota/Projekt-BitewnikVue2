@@ -4,25 +4,25 @@
   <br>
     <form class ="siema" 
           @submit="checkForm"
-          action="https://vuejs.org/"
+          action="reje"
           method="post">
      
       <div class="black-text">
        <p class="h4 text-center mb-4">Rejestracja Użytkownika</p>
-        <mdb-input label="Imię" v-model ="imie" icon="user" type="text"/>
-        <mdb-input label="Nazwisko" v-model ="nazwisko" icon="user" type="text"/>
-        <mdb-input label="Data urodzenia RR/MM/DD" v-model ="data" icon="calendar-day" type="text"/>
+        <mdb-input label="Imię" v-model ="user.imie" icon="user" type="text"/>
+        <mdb-input label="Nazwisko" v-model ="user.nazwisko" icon="user" type="text"/>
+        <mdb-input label="Data urodzenia RR/MM/DD" v-model ="user.data" icon="calendar-day" type="text"/>
 
-        <mdb-input label="Twój e-mail" v-model ="email" icon="envelope" type="email"/>
-        <mdb-input label="Twoje hasło" v-model ="haslo" icon="lock" type="password"/>
-        <mdb-input label="Potwierdź hasło" v-model ="haslo2" icon="lock" type="password"/>
-        <mdb-input label="Miasto" v-model ="miasto" icon="fas fa-city" type="text"/>
-        <mdb-input type="checkbox" id="checkbox2" name="check2" v-model="regulamin" label="Akceptuję regulamin serwisu"/>
+        <mdb-input label="Twój e-mail" v-model ="user.email" icon="envelope" type="email"/>
+        <mdb-input label="Twoje hasło" v-model ="user.haslo" icon="lock" type="password"/>
+        <mdb-input label="Potwierdź hasło" v-model ="user.haslo2" icon="lock" type="password"/>
+        <mdb-input label="Miasto" v-model ="user.miasto" icon="fas fa-city" type="text"/>
+        <mdb-input type="checkbox" id="checkbox2" name="check2" v-model="user.regulamin" label="Akceptuję regulamin serwisu"/>
 
          <p v-if="errors.length">
             <b><H2>W formularzu pojawiły się błędy:</H2></b>
             <ul>
-              <li v-for="(error, index) in errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></li>
+              <li v-for="(error, index) in user.errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></li>
             </ul>
           </p>
         <div class="text-center">
@@ -47,6 +47,7 @@
     },
     data(){
       return{
+        user:{
           errors: [],
           imie: null,
           nazwisko: null,
@@ -56,6 +57,7 @@
           haslo2: null,
           miasto: null,
           regulamin: null
+        }
       }
     },
     computed:{
@@ -63,22 +65,23 @@
     },
     methods:{
       checkForm: function (e) {
-          if(this.imie && this.nazwisko && this.data && this.email && this.haslo && this.haslo2 && this.miasto && this.regulamin){
-            return true;
+          if(this.user.imie && this.user.nazwisko && this.user.data && this.user.email && this.user.haslo && this.user.haslo2 && this.user.miasto && this.user.regulamin){
+            console.log(this.user);
+            return 1;
           }
 
           this.errors = [];
 
-          if (!this.imie) {
+          if (!this.user.imie) {
             this.errors.push('Podaj Imię');
           }
-          if (!this.nazwisko) {
+          if (!this.user.nazwisko) {
             this.errors.push('Podaj Nazwisko');
           }
-          if (!this.data) {
+          if (!this.user.data) {
             this.errors.push('Podaj datę urodzenia');
           }else{
-            var timestamp = Date.parse(this.data);
+            var timestamp = Date.parse(this.user.data);
 
             if (isNaN(timestamp) == false) {
               // var d = new Date(timestamp);
@@ -91,27 +94,27 @@
           // if (!(this.data instanceof Date) && !(isFinite(this.data))) {
           //     this.errors.push('Data w niepoprawnym formacie');
           // }
-          if (!this.email) {
+          if (!this.user.email) {
             this.errors.push('Podaj poprawny email');
           }
 
-          if (!this.haslo) {
+          if (!this.user.haslo) {
             this.errors.push('Podaj haslo');
           }
-          if(this.haslo && this.haslo.length < 3){
+          if(this.user.haslo && this.user.haslo.length < 3){
             this.errors.push('Hasło musi mieć przynajmniej 3 znaki');
           }
-           if (!this.haslo2) {
+           if (!this.user.haslo2) {
             this.errors.push('Potwierdź hasło');
           }
-          else if(this.haslo != this.haslo2){
+          else if(this.user.haslo != this.user.haslo2){
             this.errors.push('Hasła nie są takie same');
           }
 
-          if (!this.miasto) {
+          if (!this.user.miasto) {
             this.errors.push('Podaj miasto');
           }
-          if (!this.regulamin) {
+          if (!this.user.regulamin) {
             this.errors.push('Zaakceptuj regulamin');
           }
 

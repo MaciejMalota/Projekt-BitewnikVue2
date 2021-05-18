@@ -9,6 +9,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 import router from './router'
 
+
 Vue.use(VueRouter)
 
 // Make BootstrapVue available throughout your project
