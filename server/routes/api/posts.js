@@ -44,7 +44,39 @@ router.post('/', async (req, res) => {
   
 });
 
+router.post('/login', async (req, res) => {
 
+  
+  const posts = await loadPostsCollection();
+  const crypto = require('crypto')
+  var errors = [];
+  const md5sum = crypto.createHash('md5');
+
+  const pas = md5sum.update(req.body.haslo).digest('hex');
+
+  if (await posts.findOne({ login: req.body.login })) {
+
+    var user = await posts.findOne({ login: req.body.login });
+    if(user.haslo == pas){
+
+      console.log('Zalogowano');
+      
+    }
+    else{
+      errors.push("Błędne Hasło");
+    }
+
+  }else{
+    errors.push("Nie znaleziono użytkownika");
+  }
+
+
+  if( errors.length != 0 ){
+    return res.status(404).send({message: errors})
+  }
+  
+  res.status(201).send('Stworzono');
+});
 
 async function loadPostsCollection() {
   const client = await mongodb.MongoClient.connect(
