@@ -1,8 +1,5 @@
 const express = require('express');
 const mongodb = require('mongodb');
-// const mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true});
-
 const router = express.Router();
 // Get Posts
 router.get('/', async (req, res) => {
@@ -12,6 +9,7 @@ router.get('/', async (req, res) => {
 
 // Add Post
 router.post('/', async (req, res) => {
+
   const posts = await loadPostsCollection();
   const crypto = require('crypto')
   var errors = [];
@@ -19,14 +17,13 @@ router.post('/', async (req, res) => {
 
   const pas = md5sum.update(req.body.haslo).digest('hex');
 
-  if (posts.findOne({ email: req.body.email })) {
+  if (await posts.findOne({ email: req.body.email })) {
     errors.push("Email w użyciu");
   }
 
-  if (posts.findOne({ login: req.body.login })) {
+  if (await posts.findOne({ login: req.body.login })) {
     errors.push("Login w użyciu");
   }
-  console.log(errors);
 
   if( errors.length != 0 ){
     return res.status(404).send({message: errors})
@@ -43,8 +40,6 @@ router.post('/', async (req, res) => {
   });
 
 
-  // res.status(500).send('Email jest w użyciu');
-  // res.status(501).send('Login jest w użyciu');
   res.status(201).send('Stworzono');
   
 });
@@ -59,7 +54,7 @@ async function loadPostsCollection() {
     }
   );
 
-  return client.db('vue_express').collection('posts');
+  return client.db('bitewnik').collection('user');
 }
 
 module.exports = router;

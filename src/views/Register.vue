@@ -6,7 +6,7 @@
        <p class="h4 text-center mb-4">Rejestracja Użytkownika</p>
         <mdb-input label="Imię" v-model ="user.imie" icon="user" type="text"/>
         <mdb-input label="Nazwisko" v-model ="user.nazwisko" icon="user" type="text"/>
-        <mdb-input label="login" v-model ="user.login" icon="user" type="text"/>
+        <mdb-input label="Login" v-model ="user.login" icon="user" type="text"/>
         <mdb-input label="Data urodzenia RR/MM/DD" v-model ="user.data" icon="calendar-day" type="text"/>
 
         <mdb-input label="Twój e-mail" v-model ="user.email" icon="envelope" type="email"/>
@@ -20,6 +20,9 @@
             <ul>
               <li v-for="(error, index) in errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></li>
             </ul>
+          </p>
+          <p class = "success" v-if="success.length">
+            <b><H2>Zarejestrowano pomyślnie!</H2></b>
           </p>
         <div class="text-center">
           <mdb-btn color="success" success @click='checkForm'>Zarejestruj</mdb-btn>
@@ -44,6 +47,7 @@
     data(){
       return{
         errors: [],
+        success: [],
         user:{
           imie: "Patryk",
           nazwisko: "Jankowski",
@@ -62,22 +66,10 @@
     },
     methods:{
       checkForm: function () {
-
-          if(this.user.imie && this.user.nazwisko && this.user.data && this.user.email && this.user.haslo && this.user.haslo2 && this.user.miasto && this.user.regulamin){
-            axios.post('http://localhost:5000/api/posts/', this.user)
-            .then(response => {
-                console.log(response.data);
-                this.errors = [];
-              })
-            .catch(error => {
-                this.errors = [];
-                for(var i = 0; i < error.response.data.message.length; i++)
-                  this.errors.push(error.response.data.message[i]);
-              });
-            return 1;
-          }
-
           this.errors = [];
+          
+
+          
 
           if (!this.user.imie) {
             this.errors.push('Podaj Imię');
@@ -88,7 +80,7 @@
           if (!this.user.login) {
             this.errors.push('Podaj Login');
           }
-          else if(this.user.login < 5){
+          else if(this.user.login > 5){
             this.errors.push('Login musi mieć conajmniej 5 znaków');
           }
           
@@ -131,8 +123,34 @@
           if (!this.user.regulamin) {
             this.errors.push('Zaakceptuj regulamin');
           }
+          
+          if( this.errors.length == 0 ){
+            axios.post('http://localhost:5000/api/posts/', this.user)
+            .then(response => {
+                console.log(response.data);
+                this.resetInput();
+                this.success.push('response.data');
+              })
+            .catch(error => {
+                for(var i = 0; i < error.response.data.message.length; i++)
+                  this.errors.push(error.response.data.message[i]);
+              });
+            return 1;
+          }
 
-        }
+        },
+      resetInput() {
+        this.user.imie = "";
+        this.user.nazwisko = "";
+        this.user.login = "";
+        this.user.haslo = "";
+        this.user.haslo2 = "";
+        this.user.email = "";
+        this.user.data = "";
+        this.user.miasto = "";
+        this.user.regulamin = false;
+        this.user.email = "";
+      }
     }
 }
 
@@ -169,6 +187,11 @@
 .siema li{
   font-size:20px;
   color:rgb(255, 0, 0);
+  display: inline;
+}
+.success{
+  font-size:20px;
+  color:rgb(0, 255, 0);
   display: inline;
 }
 </style>
