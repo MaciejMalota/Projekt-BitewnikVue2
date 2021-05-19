@@ -7,3 +7,20 @@ body.register{
    background-size: 100vw 100vh;
 }
 
+body.home{
+  background-image: url('https://bnetcmsus-a.akamaihd.net/cms/content_entry_media/FJPT5455KR5K1589912863345.jpg');
+ background-repeat: no-repeat;
+ background-size: 100vw 100vh;
+}
+
+body.tournaments{
+  background-image: url('https://cdn.wallpapersafari.com/41/27/NvSYc9.jpg');
+ background-repeat: no-repeat;
+ background-size: 100vw 100vh;
+}
+
+body.teams{
+  background-image: url('https://www.teahub.io/photos/full/251-2519591_soldiers-halo-spartans-team-video-game-wallpaper-destiny.jpg');
+ background-repeat: no-repeat;
+ background-size: 100vw 100vh;
+}

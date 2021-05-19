@@ -2,15 +2,11 @@
   <!-- Material form register -->
   <div class="back">
   <br>
-    <form class ="siema" 
-          @submit="checkForm"
-          action="reje"
-          method="post">
-     
       <div class="black-text">
        <p class="h4 text-center mb-4">Rejestracja Użytkownika</p>
         <mdb-input label="Imię" v-model ="user.imie" icon="user" type="text"/>
         <mdb-input label="Nazwisko" v-model ="user.nazwisko" icon="user" type="text"/>
+        <mdb-input label="login" v-model ="user.login" icon="user" type="text"/>
         <mdb-input label="Data urodzenia RR/MM/DD" v-model ="user.data" icon="calendar-day" type="text"/>
 
         <mdb-input label="Twój e-mail" v-model ="user.email" icon="envelope" type="email"/>
@@ -19,23 +15,23 @@
         <mdb-input label="Miasto" v-model ="user.miasto" icon="fas fa-city" type="text"/>
         <mdb-input type="checkbox" id="checkbox2" name="check2" v-model="user.regulamin" label="Akceptuję regulamin serwisu"/>
 
-         <p v-if="errors.length">
+         <p class = "siema" v-if="errors.length">
             <b><H2>W formularzu pojawiły się błędy:</H2></b>
             <ul>
-              <li v-for="(error, index) in user.errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></li>
+              <li v-for="(error, index) in errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></li>
             </ul>
           </p>
         <div class="text-center">
-          <mdb-btn type="submit" color="success">Zarejestruj</mdb-btn>
+          <mdb-btn color="success" success @click='checkForm'>Zarejestruj</mdb-btn>
         </div>
       </div>
      
-    </form>
     <!-- Material form register -->
   </div>
 </template>
 <script>
   import { mdbInput, mdbBtn } from 'mdbvue';
+  import axios from 'axios';
   export default {
     name: 'Register',
     components: {
@@ -47,16 +43,17 @@
     },
     data(){
       return{
+        errors: [],
         user:{
-          errors: [],
-          imie: null,
-          nazwisko: null,
-          data: null,
-          email: null,
-          haslo: null,
-          haslo2: null,
-          miasto: null,
-          regulamin: null
+          imie: "Patryk",
+          nazwisko: "Jankowski",
+          login: "lasek",
+          data: "1998/11/30",
+          email: "Adamjerzy@wp.pl",
+          haslo: "qwerty",
+          haslo2: "qwerty",
+          miasto: "Nysa",
+          regulamin: true
         }
       }
     },
@@ -64,9 +61,19 @@
 
     },
     methods:{
-      checkForm: function (e) {
+      checkForm: function () {
+
           if(this.user.imie && this.user.nazwisko && this.user.data && this.user.email && this.user.haslo && this.user.haslo2 && this.user.miasto && this.user.regulamin){
-            console.log(this.user);
+            axios.post('http://localhost:5000/api/posts/', this.user)
+            .then(response => {
+                console.log(response.data);
+                this.errors = [];
+              })
+            .catch(error => {
+                this.errors = [];
+                this.errors.push(error.response.data[0]);
+                this.errors.push(error.response.data[1]);
+              });
             return 1;
           }
 
@@ -78,6 +85,13 @@
           if (!this.user.nazwisko) {
             this.errors.push('Podaj Nazwisko');
           }
+          if (!this.user.login) {
+            this.errors.push('Podaj Login');
+          }
+          else if(this.user.login < 5){
+            this.errors.push('Login musi mieć conajmniej 5 znaków');
+          }
+          
           if (!this.user.data) {
             this.errors.push('Podaj datę urodzenia');
           }else{
@@ -118,7 +132,6 @@
             this.errors.push('Zaakceptuj regulamin');
           }
 
-          e.preventDefault();
         }
     }
 }

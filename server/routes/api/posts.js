@@ -11,12 +11,42 @@ router.get('/', async (req, res) => {
 // Add Post
 router.post('/', async (req, res) => {
   const posts = await loadPostsCollection();
+  const crypto = require('crypto')
+  var errors = [];
+  const md5sum = crypto.createHash('md5');
+
+  const pas = md5sum.update(req.body.haslo).digest('hex');
+
+  if (posts.findOne({ email: req.body.email })) {
+    errors.push("Email w użyciu");
+  }
+
+  if (posts.findOne({ login: req.body.login })) {
+    errors.push("Login w użyciu");
+  }
+  console.log(errors);
+
+  if( errors.length != 0 ){
+    res.status(500).json(errors);
+  }
+
   await posts.insertOne({
-    text: req.body.text,
-    createdAt: new Date()
+    imie: req.body.imie,
+    nazwisko: req.body.nazwisko,
+    login: req.body.login,
+    data: req.body.data,
+    email: req.body.email,
+    haslo: pas,
+    miasto: req.body.miasto
   });
-  res.status(201).send();
+
+
+  // res.status(500).send('Email jest w użyciu');
+  // res.status(501).send('Login jest w użyciu');
+  res.status(201).send('Stworzono');
+  
 });
+
 
 // Delete Post
 router.delete('/:id', async (req, res) => {

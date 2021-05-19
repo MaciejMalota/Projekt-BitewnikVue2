@@ -2,6 +2,7 @@ import axios from "axios";
 
 const url = "http://localhost:5000/api/posts/";
 
+/* eslint-disable no-async-promise-executor */
 
 class PostService {
   // get posts
@@ -17,20 +18,9 @@ class PostService {
           }))
         );
       } catch (err) {
-        reject(err);
+        reject('err');
       }
     });
-  }
-  //Create post
-  static insertPost(text) {
-    return axios.post(url, {
-      text,
-    });
-  }
-
-  //delete post
-  static deletePost(id) {
-    return axios.delete(`${url}${id}`);
   }
 }
 
