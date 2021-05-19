@@ -1,5 +1,7 @@
 const express = require('express');
 const mongodb = require('mongodb');
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const router = express.Router();
 // Get Posts
@@ -27,7 +29,7 @@ router.post('/', async (req, res) => {
   console.log(errors);
 
   if( errors.length != 0 ){
-    res.status(500).json(errors);
+    return res.status(404).send({message: errors})
   }
 
   await posts.insertOne({
@@ -48,12 +50,6 @@ router.post('/', async (req, res) => {
 });
 
 
-// Delete Post
-router.delete('/:id', async (req, res) => {
-  const posts = await loadPostsCollection();
-  await posts.deleteOne({ _id: new mongodb.ObjectID(req.params.id) });
-  res.status(200).send({});
-});
 
 async function loadPostsCollection() {
   const client = await mongodb.MongoClient.connect(

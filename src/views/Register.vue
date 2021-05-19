@@ -71,8 +71,8 @@
               })
             .catch(error => {
                 this.errors = [];
-                this.errors.push(error.response.data[0]);
-                this.errors.push(error.response.data[1]);
+                for(var i = 0; i < error.response.data.message.length; i++)
+                  this.errors.push(error.response.data.message[i]);
               });
             return 1;
           }
