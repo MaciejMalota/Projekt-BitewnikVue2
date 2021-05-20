@@ -67,7 +67,7 @@
     methods:{
       checkForm: function () {
           this.errors = [];
-          
+          this.success = [];
 
           
 
@@ -125,11 +125,13 @@
           }
           
           if( this.errors.length == 0 ){
-            axios.post('http://localhost:5000/api/posts/', this.user)
+            axios.post('/', this.user)
             .then(response => {
                 console.log(response.data);
                 this.resetInput();
                 this.success.push('response.data');
+                setTimeout(() => {  this.success = []; }, 3000);
+                
               })
             .catch(error => {
                 for(var i = 0; i < error.response.data.message.length; i++)
@@ -161,6 +163,7 @@
   max-width:40vw;
   margin:auto;
   padding:30px;
+  min-width: 400px;
   max-height:100%;
 }
 .black-text {
