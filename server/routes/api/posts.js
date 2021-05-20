@@ -1,6 +1,12 @@
 const express = require('express');
 const mongodb = require('mongodb');
 const router = express.Router();
+const JWT = require('jsonwebtoken');
+var app = express();
+var cors = require('cors');
+app.use(cors());
+
+const SECRET = 'cisza';
 // Get Posts
 router.get('/', async (req, res) => {
   const posts = await loadPostsCollection();
@@ -60,7 +66,7 @@ router.post('/login', async (req, res) => {
     if(user.haslo == pas){
 
       console.log('Zalogowano');
-      
+
     }
     else{
       errors.push("Błędne Hasło");
@@ -74,8 +80,17 @@ router.post('/login', async (req, res) => {
   if( errors.length != 0 ){
     return res.status(404).send({message: errors})
   }
+  const payload = {
+      login: req.body.login
+  }
+
+  const token = JWT.sign(payload, SECRET);
+  res.cookie('access_token', token,{
+    maxAge: 3600,
+    httpOnly: true
+  });
   
-  res.status(201).send('Stworzono');
+  res.status(200).send({ login: req.body.login, jwt: token });
 });
 
 async function loadPostsCollection() {
