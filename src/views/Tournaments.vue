@@ -39,7 +39,8 @@ export default {
 
 <style scoped>
 .jednakarta{
-  padding:30px;
+  margin-left: 40px;
+  padding:15px;
   display:inline-block;
 }
 .karta{
