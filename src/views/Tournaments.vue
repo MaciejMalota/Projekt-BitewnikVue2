@@ -1,6 +1,6 @@
 <template>
   <div class="srodek">
-    <button type="button" class="btn btn-success">DODAJ TURNIEJ</button>
+    <button type="button" class="btn btn-success" @click="$router.push('/addtournament')">DODAJ TURNIEJ</button>
     <br>
     <div class="karty" v-for="n in 10" v-bind:key="n">
     <div class="jednakarta" >
