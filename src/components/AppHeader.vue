@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-navbar type="dark" id="navvv" variant="dark">
+  <b-navbar  class="navbar fixed-top navbar-light bg-light" type="dark" id="navvv" variant="dark">
     <b-navbar-nav>
       <b-nav-item @click="$router.push('/')" ><i class="fa fa-fw fa-home"></i>Home</b-nav-item>
       <b-nav-item @click="$router.push('/register')" ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item>
@@ -110,6 +110,7 @@ li:not(:last-child){
 #navvv{
   font-size:20px;
   max-height: 112px;
+  
 }
 i{
   margin-right: 10px !important;

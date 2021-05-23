@@ -1,5 +1,5 @@
 <template>
-<b-container>
+<b-container style="max-width:300px;">
 
  <b-carousel
     id="carousel-fade"
