@@ -1,5 +1,5 @@
 <template>
-  <div>Teams</div>
+  <div>aaaa</div>
 </template>
 <script>
 

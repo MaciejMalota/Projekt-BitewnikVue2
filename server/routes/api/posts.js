@@ -2,6 +2,7 @@ const express = require('express');
 const mongodb = require('mongodb');
 const router = express.Router();
 const JWT = require('jsonwebtoken');
+const crypto = require('crypto');
 var app = express();
 var cors = require('cors');
 app.use(cors());
@@ -14,14 +15,13 @@ router.get('/', async (req, res) => {
 });
 
 // Add Post
-router.post('/', async (req, res) => {
-
-  const posts = await loadPostsCollection();
-  const crypto = require('crypto')
+router.post('/register', async (req, res) => {
   var errors = [];
-  const md5sum = crypto.createHash('md5');
+  const posts = await loadPostsCollection(); // laduje posty czyli dane 
 
-  const pas = md5sum.update(req.body.haslo).digest('hex');
+  
+  const md5sum = crypto.createHash('md5');
+  const pas = md5sum.update(req.body.haslo).digest('hex'); // hashowanie hasla 
 
   if (await posts.findOne({ email: req.body.email })) {
     errors.push("Email w użyciu");
@@ -52,10 +52,9 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
 
-  
-  const posts = await loadPostsCollection();
-  const crypto = require('crypto')
   var errors = [];
+  const posts = await loadPostsCollection();
+  
   const md5sum = crypto.createHash('md5');
 
   const pas = md5sum.update(req.body.haslo).digest('hex');

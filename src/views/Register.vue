@@ -7,7 +7,7 @@
         <mdb-input label="Imię" v-model ="user.imie" icon="user" type="text"/>
         <mdb-input label="Nazwisko" v-model ="user.nazwisko" icon="user" type="text"/>
         <mdb-input label="Login" v-model ="user.login" icon="user" type="text"/>
-        <mdb-input label="Data urodzenia RR/MM/DD" v-model ="user.data" icon="calendar-day" type="text"/>
+        <mdb-input label="Data urodzenia RRRR/MM/DD" v-model ="user.data" icon="calendar-day" type="text"/>
 
         <mdb-input label="Twój e-mail" v-model ="user.email" icon="envelope" type="email"/>
         <mdb-input label="Twoje hasło" v-model ="user.haslo" icon="lock" type="password"/>
@@ -125,7 +125,7 @@
           }
           
           if( this.errors.length == 0 ){
-            axios.post('/', this.user)
+            axios.post('/register', this.user)
             .then(response => {
                 console.log(response.data);
                 this.resetInput();

@@ -4,8 +4,8 @@
     <b-navbar-nav>
       <b-nav-item @click="$router.push('/')" ><i class="fa fa-fw fa-home"></i>Home</b-nav-item>
       <b-nav-item @click="$router.push('/register')" ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item>
-      <b-nav-item @click="$router.push('/tournaments')" ><i class="fa fa-sitemap" aria-hidden="true"></i>Turnieje</b-nav-item>
-      <b-nav-item @click="$router.push('/teams')" ><i class="fa fa-user-plus" aria-hidden="true"></i>Drużyny</b-nav-item>
+      <b-nav-item @click="$router.push('/tournaments')" ><i class="fa fa-sitemap" aria-hidden="true"></i>Top10</b-nav-item>
+      <b-nav-item @click="$router.push('/teams')" ><i class="fa fa-user-plus" aria-hidden="true"></i>Encyklopedia</b-nav-item>
       <!-- <b-nav-item-dropdown text="Konto" left>
         <b-dropdown-item href="#">Account</b-dropdown-item>
         <b-dropdown-item href="#">Settings</b-dropdown-item>
