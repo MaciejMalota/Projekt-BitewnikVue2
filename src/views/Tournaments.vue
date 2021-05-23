@@ -1,5 +1,7 @@
 <template>
   <div class="srodek">
+    <button type="button" class="btn btn-success">DODAJ TURNIEJ</button>
+    <br>
     <div class="karty" v-for="n in 10" v-bind:key="n">
     <div class="jednakarta" >
       <b-card 
@@ -39,7 +41,7 @@ export default {
 
 <style scoped>
 .jednakarta{
-  margin-left: 40px;
+  margin-left: 30px;
   padding:15px;
   display:inline-block;
 }
