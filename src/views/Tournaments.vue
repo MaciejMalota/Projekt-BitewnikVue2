@@ -52,8 +52,8 @@ text-align:center;
 display:inline-block;
 
 }
-.srodek{
 
+.srodek{
 margin: auto;
 width: 50%;
 padding: 10px;
