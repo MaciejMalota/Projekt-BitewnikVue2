@@ -41,13 +41,13 @@ export default {
 
 <style scoped>
 .jednakarta{
-  margin-left: 30px;
   padding:15px;
+
   display:inline-block;
 }
 .karta{
 margin-left:10px;
-max-width: 26rem;
+
 text-align:center;
 display:inline-block;
 
@@ -67,5 +67,6 @@ padding: 10px;
 }
 .karty{
   display:inline-block;
+  width:33%;
 }
 </style>

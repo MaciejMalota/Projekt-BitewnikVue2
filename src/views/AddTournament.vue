@@ -6,6 +6,7 @@
         <mdb-input label="Nazwa turnieju" v-model ="tournament.Title" icon="book-open" type="text"/>
         <mdb-input label="Nagroda" v-model ="tournament.Prize" icon="trophy" type="text"/>
         <mdb-input label="Data eventu" v-model ="tournament.Data" icon="calendar-day" type="text"/>
+        <mdb-input label="Godzina rozpoczęcia" v-model ="tournament.Time" icon="clock" type="text"/>
         <mdb-input label="Ulica" v-model ="tournament.Street" icon="road" type="text"/>
         <mdb-input label="Miasto" v-model ="tournament.City" icon="city" type="text"/>
     </div>
@@ -27,6 +28,7 @@ export default {
           Title: "Turniej Ligi",
           Prize: "100 zł",
           Data: "2021/11/30",
+          Time:"14:55",
           Street: "ul.Kossaka 12",
           City: "Nysa",
         //   regulamin:
