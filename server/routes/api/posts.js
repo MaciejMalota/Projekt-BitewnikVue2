@@ -6,7 +6,7 @@ const crypto = require('crypto');
 var app = express();
 var cors = require('cors');
 app.use(cors());
-
+router.use(cors());
 const SECRET = 'cisza';
 // Get Posts
 router.get('/', async (req, res) => {
@@ -56,7 +56,6 @@ router.post('/login', async (req, res) => {
   const posts = await loadPostsCollection();
   
   const md5sum = crypto.createHash('md5');
-
   const pas = md5sum.update(req.body.haslo).digest('hex');
 
   if (await posts.findOne({ login: req.body.login })) {
@@ -84,14 +83,13 @@ router.post('/login', async (req, res) => {
   }
 
   const token = JWT.sign(payload, SECRET);
-  res.cookie('access_token', token,{
-    maxAge: 3600,
-    httpOnly: true
-  });
-  
+
   res.status(200).send({ login: req.body.login, jwt: token });
 });
+router.post('/logout', async (req, res) => {
 
+  res.status(201).send("hej");
+});
 async function loadPostsCollection() {
   const client = await mongodb.MongoClient.connect(
     'mongodb+srv://lasek:lasek123@cluster0.8f7wo.mongodb.net/test',

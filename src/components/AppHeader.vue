@@ -3,7 +3,7 @@
   <b-navbar  class="navbar fixed-top navbar-light bg-light" type="dark" id="navvv" variant="dark">
     <b-navbar-nav>
       <b-nav-item @click="$router.push('/')" ><i class="fa fa-fw fa-home"></i>Home</b-nav-item>
-      <b-nav-item @click="$router.push('/register')" ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item>
+      <b-nav-item v-if="!token" @click="$router.push('/register')" ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item>
       <b-nav-item @click="$router.push('/tournaments')" ><i class="fa fa-sitemap" aria-hidden="true"></i>Turnieje</b-nav-item>
       <b-nav-item @click="$router.push('/teams')" ><i class="fa fa-user-plus" aria-hidden="true"></i>Drużyny</b-nav-item>
       <!-- <b-nav-item-dropdown text="Konto" left>
@@ -30,9 +30,11 @@
           
 
           <b-form-input  v-model="user.haslo" type="password" id="password"  placeholder="User password"></b-form-input>
+          <button class="btn btn-outline-success my-2 my-sm-0" @click='zaloguj'><i class="fa fa-fw fa-user"></i> Log in</button>
           </div>
+          
           </div>
-         <button class="btn btn-outline-success my-2 my-sm-0" @click='zaloguj'><i class="fa fa-fw fa-user"></i> Log in</button>
+         <button v-if="login" class="btn btn-outline-secondary my-2 my-sm-0" @click='logout'> Logout</button>
         
 
        </b-form>
@@ -45,60 +47,84 @@
 
 <script>
 import axios from 'axios';
-
 export default {
   name: 'AppHeader',
+  
  data() {
     
       return {
+        token: this.$cookies.get("Token") || null,
+        login: this.$cookies.get("login") || null,
         success: [],
         errors: [],
         user:{
           login: '',
           haslo: ''
         }
+        
       }
     },
     computed: {
       validation() {
         return this.user.login.length > 4 && this.user.login.length < 13
-      }
+      },
+      
     },
     methods:{
+      
+      logout(){
+         axios.post('/logout')
+            .then(response => {
+                 var cookies = document.cookie.split(";");
+
+                  for (var i = 0; i < cookies.length; i++) {
+                      var cookie = cookies[i];
+                      var eqPos = cookie.indexOf("=");
+                      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                  }
+                   this.$router.go();
+                })
+            .catch(error => {
+                // err
+
+              });
+      },
       zaloguj(){
         this.errors = [];
-        var optionAxios = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
         if(this.user.login && this.user.haslo){
 
-            axios.post('/login', this.user, optionAxios)
+            axios.post('/login', this.user )
             .then(response => {
-                console.log(response.data.message);
-                this.success.push('Logowanie');
-                
-                setTimeout(() => {  this.success.push('.'); }, 500);
-                setTimeout(() => {  this.success.push('.'); }, 1000);
-                setTimeout(() => {  this.success.push('.'); }, 1500);
                 if(response.status == 200){
-                  // cookies.set('jwt', response.data.jwt)
-                  // cookies.set('email', response.data.email)
+                  let d = new Date();
+                  d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+                  let expires = "expires=" + d.toUTCString();
+                  document.cookie =
+                    "Token=" + response.data.jwt + ";" + expires + ";path=/";
+                  this.token = response.data.jwt;
+                  document.cookie =
+                    "login=" + response.data.login + ";" + expires + ";path=/";
+                  this.login = response.data.login;
+                  this.$router.push('/');
+                  this.success = "Witaj " + this.login ;
+                  
                 }
               })
             .catch(error => {
               console.log(error.response);
-                // for(var i = 0; i < error.response.data.message.length; i++)
-                //   this.errors.push(error.response.data.message[i]);
-                // setTimeout(() => {  this.errors = []; }, 2000);
+                for(var i = 0; i < error.response.data.message.length; i++)
+                  this.errors.push(error.response.data.message[i]);
+                setTimeout(() => {  this.errors = []; }, 2000);
               });
             return 1;
 
         }
       }
-    }
-
+    },
+    mounted () {
+      if(this.$cookies.get("Token")) this.success.push("Witaj "+ this.$cookies.get("login"));
+      }
 }
 </script>
 
