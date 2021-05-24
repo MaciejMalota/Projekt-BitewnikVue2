@@ -1,8 +1,8 @@
 <template>
 
 <b-container >
-    <b-row   no-gutters >
-    <b-col align-self="stretch"   md="8" class="t1" >
+    <b-row align-v="stretch"  no-gutters >
+    <b-col   md="8" class="t1" >
 
  <b-carousel
     id="carousel-fade"
@@ -12,24 +12,29 @@
     indicators
     img-width="1040"
     img-height="480"
-    class="karuzela"
+   
   >
     <b-carousel-slide
-      caption="First slide"
-      img-src="https://picsum.photos/1024/480/?image=10"
+      caption="Counter-Strike"
+      img-src="https://www.telepolis.pl/images/2021/03/counter-strike-global-offensive.jpg"
     ></b-carousel-slide>
     <b-carousel-slide
-      caption="Second Slide"
-      img-src="https://picsum.photos/1024/480/?image=12"
+      caption="League of Legends"
+      img-src="https://how2play.pl/wp-content/uploads/2016/04/baron-nashor-from-league-of-legends.jpg"
     ></b-carousel-slide>
     <b-carousel-slide
-      caption="Third Slide"
-      img-src="https://picsum.photos/1024/480/?image=22"
+      caption="DOTA 2"
+      img-src="https://wallpaperaccess.com/full/671214.jpg"
     ></b-carousel-slide>
   </b-carousel>
 
   </b-col>
-    <b-col>2 of 2</b-col>
+    <b-col class="t2">
+      
+  <b-img src="https://static01.nyt.com/images/2014/10/12/business/12-LEGENDS-1/12-LEGENDS-1-superJumbo.jpg" fluid alt="Responsive image"></b-img>
+  <b-img style="height:15vh;width:40vh" src="http://mikowhy.pl/wp-content/uploads/2018/10/CS-GO-tournament.jpg" fluid alt="Responsive image"></b-img>
+
+    </b-col>
     
   </b-row>
 
@@ -66,14 +71,37 @@ export default {
 .container{
 margin-top: 5vw;
 width: 1200vw;
-height: 45vh;
+height: 40vh;
 border: solid 20px;
 }
 .t1{
-  border:solid 4px;
+ 
+  height: 37vh;
   /* height: auto; */
   /* width: 40vw; */
 }
+.t2{
+ 
+  height: 40vh;
+  /* height: auto; */
+  /* width: 40vw; */
+}
+
+.carousel{
+  height: 37vh;
+  max-width: 100vw;
+
+}
+.carousel .carousel-item {
+  height: 37vh;
+  
+    object-fit:cover;
+    top: 0;
+    left: 0;
+}
+
+
+
 
 
 
