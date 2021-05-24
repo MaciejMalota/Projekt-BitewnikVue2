@@ -28,6 +28,13 @@ body.teams{
  background-size: 100vw 100vh;
  background-attachment: fixed;
 }
+
+body.PageNotFound{
+  background-image: url('https://preview.redd.it/fv4u04o8tr961.jpg?width=2560&format=pjpg&auto=webp&s=686dc54f44007a646af2b48e74a1bb59777ceedc');
+ background-repeat: no-repeat;
+ background-size: 100vw 100vh;
+ background-attachment: fixed;
+}
 .black-text{
   border-radius: 25px;
   max-width:40vw;
