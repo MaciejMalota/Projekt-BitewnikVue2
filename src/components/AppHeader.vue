@@ -19,11 +19,11 @@
 
         <b-form  class="form-inline my-2 my-lg-0">
           <div class = "logowanie" v-if="success.length">
-              <H4 v-for="suc in success" v-bind:key="suc" class = "qwe">{{ suc }}</H4>
+              <H4 v-for="(suc,i) in success" v-bind:key="suc+i" class = "qwe">{{ suc }}</H4>
             </div>
             <div class = "dwqd" v-else>
             <div class = "siema" v-if="errors.length">
-              <H4 v-for="(error, index) in errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></H4>
+              <H4 v-for="(error, index) in errors" v-bind:key="error+index">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></H4>
             </div>
             <div v-else> 
           <b-form-input v-model="user.login" :state="validation" id="login" placeholder="User login" ></b-form-input>
