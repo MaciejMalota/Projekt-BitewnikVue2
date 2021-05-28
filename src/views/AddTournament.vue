@@ -1,7 +1,8 @@
 <template>
       <div class="formTurnieju">
-    <p class="h4 text-center mb-4">Sign in</p>
+    
     <div class="black-text">
+        <p class="h4 text-center mb-4">Sign in</p>
         <mdb-input label="Gra" v-model ="tournament.Game" icon="gamepad" type="text"/>
         <mdb-input label="Nazwa turnieju" v-model ="tournament.Title" icon="book-open" type="text"/>
         <mdb-input label="Nagroda" v-model ="tournament.Prize" icon="trophy" type="text"/>
@@ -9,10 +10,11 @@
         <mdb-input label="Godzina rozpoczęcia" v-model ="tournament.Time" icon="clock" type="text"/>
         <mdb-input label="Ulica" v-model ="tournament.Street" icon="road" type="text"/>
         <mdb-input label="Miasto" v-model ="tournament.City" icon="city" type="text"/>
-    </div>
-    <div class="text-center">
+        <div class="text-center">
       <mdb-btn color="success">Stwórz</mdb-btn>
     </div>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -46,5 +48,7 @@ export default {
 </script>
 
 <style scoped>
-
+.black-text{
+  margin-top:3rem !important;
+}
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="srodek">
-    <button type="button" class="btn btn-success" @click="$router.push('/addtournament')">DODAJ TURNIEJ</button>
+ 
+    <button type="button" v-if="this.$root.login" class="btn btn-success" @click="$router.push('/addtournament')">DODAJ TURNIEJ</button>
+
     <br>
     <div class="karty" v-for="n in 10" v-bind:key="n">
     <div class="jednakarta" >
@@ -21,7 +23,7 @@
           <b-list-group-item>Adres: <b> ul.Kossaka</b> </b-list-group-item>
         </b-list-group>
 
-        <b-button href="#" variant="dark">Szczegóły Turnieju</b-button>
+        <b-button  variant="dark">Szczegóły Turnieju</b-button>
       </b-card>
       </div>
   </div>
@@ -29,14 +31,30 @@
 </div>
 </template>
 <script>
-
+import axios from 'axios';
 export default {
   components: {
   },
   beforeCreate: function() {      // do body background w global.css
         document.body.className = 'tournaments';
+        
+    
+    },
+    data() {
+    
+      return {
+
+
+        }
+        
+      },
+    mounted () {
+    },
+    methods: {
+         
     }
 }
+
 </script>
 
 <style scoped>

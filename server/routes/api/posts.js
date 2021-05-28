@@ -42,7 +42,8 @@ router.post('/register', async (req, res) => {
     data: req.body.data,
     email: req.body.email,
     haslo: pas,
-    miasto: req.body.miasto
+    miasto: req.body.miasto,
+    right: 0
   });
 
 
@@ -50,8 +51,46 @@ router.post('/register', async (req, res) => {
   
 });
 
-router.post('/login', async (req, res) => {
 
+function verifyToken(token)
+{
+  return JWT.verify(token, SECRET)
+}
+
+async function getstate(log){
+  const posts = await loadPostsCollection();
+  var user = await posts.findOne({ login: log });
+
+  if (user) {
+    return user.right; 
+
+  }
+  else{
+    return 0;
+  }
+
+}
+router.post('/ver', async (req, res, next) => {
+  var cookie = req.body[0];
+  
+  try
+  {
+    var c = verifyToken(cookie);
+    const status = 201
+    const message = c;
+    var prawa = await getstate(c.login);
+    res.status(status).json({ status, message, prawa })
+  }
+  catch (err)
+  {
+    const status = 401
+    const message = 'Unauthorized'
+    res.status(status).json({ status, message })
+  } 
+});
+
+router.post('/login', async (req, res) => {
+  
   var errors = [];
   const posts = await loadPostsCollection();
   
@@ -75,6 +114,7 @@ router.post('/login', async (req, res) => {
   }
 
 
+
   if( errors.length != 0 ){
     return res.status(404).send({message: errors})
   }
@@ -83,11 +123,12 @@ router.post('/login', async (req, res) => {
   }
 
   const token = JWT.sign(payload, SECRET);
-
   res.status(200).send({ login: req.body.login, jwt: token });
 });
-router.post('/logout', async (req, res) => {
 
+
+router.post('/logout', async (req, res) => {
+  
   res.status(201).send("hej");
 });
 async function loadPostsCollection() {

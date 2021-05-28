@@ -9,6 +9,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 import router from './router'
 import './axios'
+import axios from 'axios';
 Vue.use(VueRouter)
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
@@ -41,6 +42,17 @@ router.beforeEach((to, from, next) => {
   }else {
     next() // make sure to always call next()!
   }
+})
+
+Vue.mixin({
+  data: function() {
+    return {
+      login: null,
+      right: null
+    }
+  }
+  
+
 })
 
 new Vue({
