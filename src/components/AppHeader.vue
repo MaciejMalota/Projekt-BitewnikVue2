@@ -109,7 +109,7 @@ export default {
                   
                   
                   this.$router.go();
-                  this.success = "Witaj " + this.login ;
+                  this.success = "Witaj " + this.login + "!" ;
                   
                 }
               })
@@ -126,12 +126,11 @@ export default {
     },
     mounted () {
      
-      if(this.$cookies.get("Token")) this.success.push("Witaj "+ this.$cookies.get("login"));
+      if(this.$cookies.get("Token")) this.success.push("Witaj "+ this.$cookies.get("login") + "!");
       var cook = [];
                 cook.push(this.$cookies.get("Token"));
                 axios.post('/ver' , cook)
                     .then(response => {
-                      console.log("tak");
                         this.$root.login = response.data.message.login;
                         this.$root.right = response.data.prawa;
                       })
@@ -172,5 +171,8 @@ button{
   display: inline;
   text-align: center;
   color:green;
+}
+.logowanie{ 
+  margin-right:20px;
 }
 </style>

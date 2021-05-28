@@ -64,7 +64,7 @@ export default {
   display:inline-block;
 }
 .karta{
-margin-left:10px;
+margin: auto;
 
 text-align:center;
 display:inline-block;
