@@ -1,9 +1,6 @@
 <template>
-
-<b-container >
-    <b-row   no-gutters >
-    <b-col align-self="stretch"   md="8" class="t1" >
-
+<div class = "cont">
+<div class = "t1">
  <b-carousel
     id="carousel-fade"
     style="text-shadow: 0px 0px 2px #000"
@@ -28,27 +25,23 @@
     ></b-carousel-slide>
   </b-carousel>
 
-  </b-col>
-    <b-col>2 of 2</b-col>
-    
-  </b-row>
-
-  <!-- KOLEJNY -->
-
-    <!-- <b-row>
-    <b-col>1 of 3</b-col>
-    <b-col>2 of 3</b-col>
-    <b-col>3 of 3</b-col>
-  </b-row> -->
-  <!-- JESZCZE 1 -->
-    <!-- <b-row>
-    <b-col>1 of 3</b-col>
-    <b-col>2 of 3</b-col>
-    <b-col>3 of 3</b-col>
-  </b-row> -->
-
-</b-container>
-
+</div>
+<div class="drugi">
+  <H2>drugi element</H2>
+</div>
+<div class="trzeci">
+  <H2>trzeci element</H2>
+</div>
+<div class="czwarty">
+  <H2>czwarty element</H2>
+</div>
+<div class="piaty">
+  <H2>piaty element</H2>
+</div>
+<div class="szosty">
+  <H2>szosty element</H2>
+</div>
+</div>
 </template>
 
 <script>
@@ -63,18 +56,47 @@ export default {
 </script>
 
 <style scoped>
-.container{
-margin-top: 5vw;
-width: 1200vw;
-height: 45vh;
+.cont{
+width:80%;
+margin:auto;
+height:100%;
+margin-top:5rem;
 border: solid 20px;
+ display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(230px, auto);
 }
 .t1{
   border:solid 4px;
   /* height: auto; */
   /* width: 40vw; */
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
 }
-
-
+.drugi{
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;  
+  border:solid 4px;
+}
+.trzeci{
+  border:solid 4px;
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;  
+}
+.czwarty{
+  border:solid 4px;
+  grid-column: 1;
+  grid-row: 3;  
+}
+.piaty{
+  border:solid 4px;
+  grid-column: 2;
+  grid-row: 3;  
+}
+.szosty{
+  border:solid 4px;
+  grid-column: 3;
+  grid-row: 3;  
+}
 
 </style>

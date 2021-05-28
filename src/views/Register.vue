@@ -157,7 +157,7 @@
 }
 
 </script>
-<style>
+<style scoped>
 
 .siema li{
   font-size:20px;
