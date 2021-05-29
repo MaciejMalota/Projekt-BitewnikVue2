@@ -1,17 +1,20 @@
 <template>
 <div>
-  <b-navbar  class="navbar fixed-top navbar-light bg-light" type="dark" id="navvv" variant="dark">
+  <b-navbar class="navbar fixed-top navbar-light bg-light" type="dark" id="navvv" variant="dark">
     <b-navbar-nav>
-      <b-nav-item @click="$router.push('/')" ><i class="fa fa-fw fa-home"></i>Home</b-nav-item>
-      <b-nav-item v-if="!token" @click="$router.push('/register')" ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item>
-      <b-nav-item @click="$router.push('/tournaments')" ><i class="fa fa-sitemap" aria-hidden="true"></i>Turnieje</b-nav-item>
-      <b-nav-item @click="$router.push('/teams')" ><i class="fa fa-user-plus" aria-hidden="true"></i>Drużyny</b-nav-item>
+      
+       
+        
+      
+      <b-nav-item @click="$router.push('/').catch(err => {})" ><i class="fa fa-fw fa-home"></i>Home</b-nav-item>
+      <b-nav-item v-if="!token" @click="$router.push('/register').catch(err => {})" ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item>
+      <b-nav-item @click="$router.push('/tournaments').catch(err => {})" ><i class="fa fa-sitemap" aria-hidden="true"></i>Turnieje</b-nav-item>
+      <b-nav-item @click="$router.push('/teams').catch(err => {})" ><i class="fa fa-user-plus" aria-hidden="true"></i>Drużyny</b-nav-item>
       <!-- <b-nav-item-dropdown text="Konto" left>
         <b-dropdown-item href="#">Account</b-dropdown-item>
         <b-dropdown-item href="#">Settings</b-dropdown-item>
       </b-nav-item-dropdown> -->
        </b-navbar-nav>
-      
        <b-navbar-nav class="ml-auto">
       <b-nav-item>
 
@@ -25,7 +28,7 @@
             <div class = "siema" v-if="errors.length">
               <H4 v-for="(error, index) in errors" v-bind:key="error+index">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></H4>
             </div>
-            <div v-else> 
+            <div v-else class ="roll"> 
           <b-form-input v-model="user.login" :state="validation" id="login" placeholder="User login" ></b-form-input>
           
 
@@ -41,7 +44,10 @@
      </b-nav-item>
 
     </b-navbar-nav>
+     
+
   </b-navbar>
+
 </div>
 </template>
 
@@ -133,6 +139,12 @@ export default {
                     .then(response => {
                         this.$root.login = response.data.message.login;
                         this.$root.right = response.data.prawa;
+                        let d = new Date();
+                        d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+                        let expires = "expires=" + d.toUTCString();
+                        document.cookie =
+                          "right=" + this.$root.right + ";" + expires + ";path=/";
+
                       })
                     .catch(error => {
                       console.log("err");
@@ -144,13 +156,15 @@ export default {
 
 
 <style scoped>
+.roll{
+  min-width:33.9rem;
+}
 li:not(:last-child){
   margin-right:80px;
 }
 #navvv{
   font-size:20px;
-  max-height: 112px;
-  
+  height: 4rem;
 }
 i{
   margin-right: 10px !important;
@@ -175,4 +189,5 @@ button{
 .logowanie{ 
   margin-right:20px;
 }
+
 </style>

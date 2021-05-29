@@ -39,7 +39,7 @@ const routes = [
     name: 'addTournament',
     component: addTournament,
     meta: {
-      requiresAuth: true,
+      requiresRank: 2,
     }
   },
   { 

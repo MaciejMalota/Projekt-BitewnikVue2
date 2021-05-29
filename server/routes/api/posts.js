@@ -70,6 +70,12 @@ async function getstate(log){
   }
 
 }
+
+router.post('/addt', async (req, res, next) => {
+
+
+});
+
 router.post('/ver', async (req, res, next) => {
   var cookie = req.body[0];
   

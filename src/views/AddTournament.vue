@@ -2,7 +2,7 @@
       <div class="formTurnieju">
     
     <div class="black-text">
-        <p class="h4 text-center mb-4">Sign in</p>
+        <p class="h4 text-center mb-4">Dodaj turniej</p>
         <mdb-input label="Gra" v-model ="tournament.Game" icon="gamepad" type="text"/>
         <mdb-input label="Nazwa turnieju" v-model ="tournament.Title" icon="book-open" type="text"/>
         <mdb-input label="Nagroda" v-model ="tournament.Prize" icon="trophy" type="text"/>

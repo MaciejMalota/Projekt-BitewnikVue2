@@ -1,7 +1,7 @@
 <template>
   <div class="srodek">
- 
-    <button type="button" v-if="this.$root.login" class="btn btn-success" @click="$router.push('/addtournament')">DODAJ TURNIEJ</button>
+    <div class="holder">
+    <button type="button" v-if="this.$root.right >= 2" class="btn btn-success" @click="$router.push('/addtournament')">DODAJ TURNIEJ</button>
 
     <br>
     <div class="karty" v-for="n in 10" v-bind:key="n">
@@ -26,12 +26,12 @@
         <b-button  variant="dark">Szczegóły Turnieju</b-button>
       </b-card>
       </div>
+      </div>
   </div>
 
 </div>
 </template>
 <script>
-import axios from 'axios';
 export default {
   components: {
   },
@@ -58,6 +58,11 @@ export default {
 </script>
 
 <style scoped>
+.holder{
+  padding:2rem;
+  padding-top:1rem;
+  margin:auto;
+}
 .jednakarta{
   padding:15px;
 
@@ -67,13 +72,15 @@ export default {
 margin: auto;
 
 text-align:center;
-display:inline-block;
 
 }
 
 .srodek{
 margin: auto;
-width: 50%;
+width: auto;
+max-width:50%;
+min-width:24rem;
+min-height:100vh;
 padding: 10px;
 	background: #858585b3;
 	-webkit-backdrop-filter: blur(1px);
@@ -84,7 +91,9 @@ padding: 10px;
 	
 }
 .karty{
+  
   display:inline-block;
-  width:33%;
+  width:18rem;
+  margin:auto;
 }
 </style>

@@ -19,19 +19,24 @@ Vue.use(require('vue-cookies'))
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+
+  if (to.matched.some(record => record.meta.requiresRank)) {
+
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (!window.$cookies.get("Token")) {
+    var x = parseInt(window.$cookies.get("right"));
+    if(isNaN(x)) x = 0;
+    console.log(x);
+    if ( x < to.meta.requiresRank ) {
       next({
         name: 'Home',
       })
     } else {
       next()
     }
-  }else if (to.matched.some(record => record.meta.requiresVisitor)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
+
+  }else if(to.matched.some(record => record.meta.requiresVisitor)){
+
     if (window.$cookies.get("Token")) {
       next({
         name: 'Home',
@@ -39,16 +44,19 @@ router.beforeEach((to, from, next) => {
     } else {
       next()
     }
-  }else {
-    next() // make sure to always call next()!
+
+  }else{
+
+    next()
   }
+  
 })
 
 Vue.mixin({
   data: function() {
     return {
       login: null,
-      right: null
+      right: 0
     }
   }
   
