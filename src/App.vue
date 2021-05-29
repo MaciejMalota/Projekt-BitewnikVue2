@@ -1,43 +1,30 @@
 <template>
-
   <div id="app">
-
-   <AppHeader />
-   <router-view></router-view>
-
+    <AppHeader />
+    <router-view></router-view>
   </div>
- 
 </template>
 
 <script>
-import AppHeader from './components/AppHeader.vue'
+import AppHeader from "./components/AppHeader.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    AppHeader
+    AppHeader,
   },
-  beforeCreate: function(){
-
-  },
+  beforeCreate: function () {},
   data() {
-    return {
-      
-    }
+    return {};
   },
-  methods: {
-    
-  },
-  computed: {
-    
-  },
- 
-}
+  methods: {},
+  computed: {},
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
-#app{
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+#app {
   padding-top: 70px;
 }
 </style>

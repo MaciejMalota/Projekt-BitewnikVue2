@@ -1,24 +1,20 @@
 <template>
-  <div class="PageNotFound">
-    PAGE NOT FOUND 404
-  </div>
+  <div class="PageNotFound">PAGE NOT FOUND 404</div>
 </template>
 <script>
-
 export default {
-  components: {
+  components: {},
+  beforeCreate: function () {
+    // do body background w global.css
+    document.body.className = "PageNotFound";
   },
-  beforeCreate: function() {          // do body background w global.css
-        document.body.className = 'PageNotFound';
-    }
-}
+};
 </script>
 <style scoped>
-.PageNotFound{
+.PageNotFound {
   text-align: center;
   font-size: 100px;
-  color:white;
+  color: white;
   -webkit-text-stroke: 4px black;
 }
-
 </style>

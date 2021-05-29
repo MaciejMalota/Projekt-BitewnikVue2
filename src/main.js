@@ -25,9 +25,8 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     var x = parseInt(window.$cookies.get("right"));
-    if(isNaN(x)) x = 0;
-    console.log(x);
-    if ( x < to.meta.requiresRank ) {
+    if (isNaN(x)) x = 0;
+    if (x < to.meta.requiresRank) {
       next({
         name: 'Home',
       })
@@ -35,7 +34,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
 
-  }else if(to.matched.some(record => record.meta.requiresVisitor)){
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
 
     if (window.$cookies.get("Token")) {
       next({
@@ -45,21 +44,21 @@ router.beforeEach((to, from, next) => {
       next()
     }
 
-  }else{
+  } else {
 
     next()
   }
-  
+
 })
 
 Vue.mixin({
-  data: function() {
+  data: function () {
     return {
       login: null,
       right: 0
     }
   }
-  
+
 
 })
 
