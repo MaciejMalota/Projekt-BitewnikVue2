@@ -5,8 +5,9 @@ import Register from '/src/views/Register.vue'
 import Tournaments from '/src/views/Tournaments.vue'
 import Teams from '/src/views/Teams.vue'
 import addTournament from '/src/views/AddTournament.vue'
+import PageNotFound from '/src/views/PageNotFound.vue'
 import '/src/assets/css/global.css';
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -17,7 +18,11 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    meta: {
+      requiresVisitor: true,
+    }
+    
   },
   {
     path: '/tournaments',
@@ -32,9 +37,19 @@ const routes = [
   {
     path: '/addtournament',
     name: 'addTournament',
-    component: addTournament
+    component: addTournament,
+    meta: {
+      requiresRank: 2,
+    }
+  },
+  { 
+    path: "/:pathMatch(.*)*", 
+    component: PageNotFound,
+    name: 'PageNotFound' 
   }
 ]
+
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

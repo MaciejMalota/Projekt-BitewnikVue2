@@ -1,4 +1,4 @@
 import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:5000/api/posts';
-// axios.defaults.withCredentials = true;
+//axios.defaults.withCredentials = true;

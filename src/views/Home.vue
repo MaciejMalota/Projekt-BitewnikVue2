@@ -57,14 +57,13 @@
 </template>
 
 <script>
-
 export default {
-  components: {
+  components: {},
+  beforeCreate: function () {
+    // do body background w global.css
+    document.body.className = "home";
   },
-  beforeCreate: function() {          // do body background w global.css
-        document.body.className = 'home';
-    }
-}
+};
 </script>
 
 <style scoped>
@@ -85,6 +84,33 @@ border: solid 20px;
   height: 40vh;
   /* height: auto; */
   /* width: 40vw; */
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+.drugi {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  border: solid 4px;
+}
+.trzeci {
+  border: solid 4px;
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+.czwarty {
+  border: solid 4px;
+  grid-column: 1;
+  grid-row: 3;
+}
+.piaty {
+  border: solid 4px;
+  grid-column: 2;
+  grid-row: 3;
+}
+.szosty {
+  border: solid 4px;
+  grid-column: 3;
+  grid-row: 3;
 }
 
 .carousel{
