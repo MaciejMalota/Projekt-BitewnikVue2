@@ -28,7 +28,7 @@
         label="Data eventu"
         v-model="tournament.Data"
         icon="calendar-day"
-        type="text"
+        type="date"
       />
       <mdb-input
         label="Godzina rozpoczęcia"
@@ -48,6 +48,16 @@
         icon="city"
         type="text"
       />
+      <p class = "siema" v-if="errors.length">
+            <b><H2>W formularzu pojawiły się błędy:</H2></b>
+            <ul>
+              <li v-for="(error, index) in errors" v-bind:key="error">{{ error }} <span v-if="index != Object.keys(errors).length-1">, </span></li>
+            </ul>
+          </p>
+          <p class = "success" v-if="success.length">
+            <b><H2>Zarejestrowano pomyślnie!</H2></b>
+          </p>
+
       <div class="text-center">
         <mdb-btn color="success" @click="submit" :disabled="!checkform"
           >Stwórz</mdb-btn
@@ -67,12 +77,13 @@ export default {
       Games: [],
       tournament: {
         Chosen: "",
-        Title: "",
-        Prize: "",
+        Title: "qwe",
+        Prize: "ewe",
         Data: "",
-        Time: "",
-        Street: "",
-        City: "",
+        Time: "qwe",
+        Street: "qwe",
+        City: "qwe",
+        User: this.$root.login,
         //   regulamin:
       },
     };
@@ -99,17 +110,31 @@ export default {
   },
   methods: {
     submit: function () {
+      this.errors = [];
       var t = true;
       Object.keys(this.tournament).forEach((key) => {
         if (this.tournament[key] == "") t = false;
       });
 
+      if(t == false){
+        this.errors.push("Podaj wszystkie dane");
+        return;
+      }
+
+      if(this.tournament.Data){
+        var timestamp = Date.parse(this.tournament.Data);
+        if (isNaN(timestamp) == true) {
+          this.errors.push("Data w niepoprawnym formacie");
+        }
+      }
+
+      this.tournament.Data = this.tournament.Data.replaceAll("-","/");
+      
+
       axios
-        .get("/getgames")
+        .post("/pushTournament", this.tournament)
         .then((response) => {
-          response.data.games.forEach((game) => {
-            this.Games.push(game.nazwa);
-          });
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -118,11 +143,12 @@ export default {
   },
   computed: {
     checkform: function () {
-      var t = true;
-      Object.keys(this.tournament).forEach((key) => {
-        if (this.tournament[key] == "") t = false;
-      });
-      return t;
+      // var t = true;
+      // Object.keys(this.tournament).forEach((key) => {
+      //   if (this.tournament[key] == "") t = false;
+      // });
+      // return t;
+      return true;
     },
   },
 };
@@ -131,5 +157,16 @@ export default {
 <style scoped>
 .black-text {
   margin-top: 3rem !important;
+  min-height: 30rem;
+}
+.siema li {
+  font-size: 20px;
+  color: rgb(255, 0, 0);
+  display: inline;
+}
+.success {
+  font-size: 20px;
+  color: rgb(0, 255, 0);
+  display: inline;
 }
 </style>

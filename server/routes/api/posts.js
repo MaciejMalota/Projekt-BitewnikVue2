@@ -10,14 +10,14 @@ router.use(cors());
 const SECRET = 'cisza';
 // Get Posts
 router.get('/', async (req, res) => {
-  const posts = await loadPostsCollection();
+  const posts = await load('user');
   res.send(await posts.find({}).toArray());
 });
 
 // Add Post
 router.post('/register', async (req, res) => {
   var errors = [];
-  const posts = await loadPostsCollection(); // laduje posty czyli dane 
+  const posts = await load('user'); // laduje posty czyli dane 
 
 
   const md5sum = crypto.createHash('md5');
@@ -57,7 +57,7 @@ function verifyToken(token) {
 }
 
 async function getstate(log) {
-  const posts = await loadPostsCollection();
+  const posts = await load('user');
   var user = await posts.findOne({ login: log });
 
   if (user) {
@@ -72,7 +72,7 @@ async function getstate(log) {
 
 router.get('/getgames', async (req, res, next) => {
 
-  const ga = await loadGames();
+  const ga = await load('games');
 
   var games = await ga.find({}).toArray();
 
@@ -109,7 +109,7 @@ router.post('/ver', async (req, res, next) => {
 router.post('/login', async (req, res) => {
 
   var errors = [];
-  const posts = await loadPostsCollection();
+  const posts = await load('user');
 
   const md5sum = crypto.createHash('md5');
   const pas = md5sum.update(req.body.haslo).digest('hex');
@@ -148,28 +148,39 @@ router.post('/logout', async (req, res) => {
 
   res.status(201).send("hej");
 
+
 });
 
-async function loadPostsCollection() {
+router.post('/pushTournament', async (req, res, next) => {
+
+  
+  const tournaments = await load('tournament'); // laduje posty czyli dane 
+
+  await tournaments.insertOne({
+    game: req.body.Chosen,
+    title: req.body.Title,
+    prize: req.body.Prize,
+    date: req.body.Data,
+    time: req.body.Time,
+    street: req.body.Street,
+    city: req.body.City,
+    user: req.body.User
+  });
+
+  res.status(201).send('Dodano');
+
+});
+
+async function load(t) {
   const client = await mongodb.MongoClient.connect(
     'mongodb+srv://lasek:lasek123@cluster0.8f7wo.mongodb.net/test',
     {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     }
   );
 
-  return client.db('bitewnik').collection('user');
-}
-
-async function loadGames() {
-  const client = await mongodb.MongoClient.connect(
-    'mongodb+srv://lasek:lasek123@cluster0.8f7wo.mongodb.net/test',
-    {
-      useNewUrlParser: true
-    }
-  );
-
-  return client.db('bitewnik').collection('games');
+  return client.db('bitewnik').collection(t);
 }
 
 module.exports = router;
