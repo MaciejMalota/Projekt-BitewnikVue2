@@ -66,8 +66,6 @@ export default {
 }
 .t1 {
   border: solid 4px;
-  /* height: auto; */
-  /* width: 40vw; */
   grid-column: 1 / 3;
   grid-row: 1 / 3;
 }
