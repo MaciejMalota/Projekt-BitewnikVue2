@@ -52,11 +52,13 @@ router.post('/register', async (req, res) => {
 });
 
 
+
+
 function verifyToken(token) {
   return JWT.verify(token, SECRET)
 }
 
-async function getstate(log) {
+async function getstate(log) {  // zwraca stopień uprawnień
   const posts = await load('user');
   var user = await posts.findOne({ login: log });
 
@@ -89,7 +91,7 @@ router.get('/getgames', async (req, res, next) => {
 
 });
 
-router.post('/ver', async (req, res, next) => {
+router.post('/ver', async (req, res) => {
   var cookie = req.body[0];
 
   try {
@@ -97,12 +99,12 @@ router.post('/ver', async (req, res, next) => {
     const status = 201
     const message = c;
     var prawa = await getstate(c.login);
-    res.status(status).json({ status, message, prawa })
+    res.status(status).json({ message, prawa })
   }
   catch (err) {
     const status = 401
     const message = 'Unauthorized'
-    res.status(status).json({ status, message })
+    res.status(status).json({ message })
   }
 });
 
@@ -112,18 +114,15 @@ router.post('/login', async (req, res) => {
   const posts = await load('user');
 
   const md5sum = crypto.createHash('md5');
-  const pas = md5sum.update(req.body.haslo).digest('hex');
+  const pas = md5sum.update(req.body.haslo).digest('hex');// hashuje hasło i zapisuje do zmiennej
 
   if (await posts.findOne({ login: req.body.login })) {
 
     var user = await posts.findOne({ login: req.body.login });
-    if (user.haslo == pas) {
+    if (user.haslo != pas) {
 
-      console.log('Zalogowano');
-
-    }
-    else {
       errors.push("Błędne Hasło");
+
     }
 
   } else {
@@ -140,7 +139,7 @@ router.post('/login', async (req, res) => {
   }
 
   const token = JWT.sign(payload, SECRET);
-  res.status(200).send({ login: req.body.login, jwt: token });
+  res.status(200).send({ jwt: token });
 });
 
 
@@ -151,12 +150,27 @@ router.post('/logout', async (req, res) => {
 
 });
 
-router.post('/pushTournament', async (req, res, next) => {
 
+router.post('/getTournaments', async (req, res) => {
+  const mongo = await load('tournaments');
   
-  const tournaments = await load('tournament'); // laduje posty czyli dane 
+  res.send(await mongo.find({}).toArray());
 
-  await tournaments.insertOne({
+});
+
+
+
+router.post('/pushTournament', async (req, res) => {
+
+  var link = "";
+  const mongo = await load('tournaments'); // polaczenie z baza danych a konkretnie kolekcją
+  if(req.body.Chosen == "League Of Legends") link = 'https://static.wikia.nocookie.net/leagueoflegends/images/9/9a/League_of_Legends_Update_Logo_Concept_05.jpg/revision/latest/scale-to-width-down/250?cb=20191029062637';
+  if(req.body.Chosen == "Dota 2") link = 'https://static.antyweb.pl/uploads/2017/04/dota2_1-1420x670.jpg';
+  if(req.body.Chosen == "Smite") link = 'https://cdn.dlcompare.com/game_tetiere/upload/gameimage/file/7577.jpeg';
+  if(req.body.Chosen == "CS GO") link = 'https://geex.x-kom.pl/wp-content/uploads/2020/10/cs-go-logo.jpg';
+  
+
+  await mongo.insertOne({
     game: req.body.Chosen,
     title: req.body.Title,
     prize: req.body.Prize,
@@ -164,12 +178,16 @@ router.post('/pushTournament', async (req, res, next) => {
     time: req.body.Time,
     street: req.body.Street,
     city: req.body.City,
-    user: req.body.User
+    user: req.body.User,
+    link: link
   });
 
   res.status(201).send('Dodano');
 
 });
+
+
+
 
 async function load(t) {
   const client = await mongodb.MongoClient.connect(

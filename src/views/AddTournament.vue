@@ -83,7 +83,7 @@ export default {
         Time: "qwe",
         Street: "qwe",
         City: "qwe",
-        User: this.$root.login,
+        User: this.$cookies.get("login"),
         //   regulamin:
       },
     };
@@ -130,7 +130,6 @@ export default {
 
       this.tournament.Data = this.tournament.Data.replaceAll("-","/");
       
-
       axios
         .post("/pushTournament", this.tournament)
         .then((response) => {
@@ -143,49 +142,11 @@ export default {
   },
   computed: {
     checkform: function () {
-      // var t = true;
-      // Object.keys(this.tournament).forEach((key) => {
-      //   if (this.tournament[key] == "") t = false;
-      // });
-      // return t;
-      return true;
-    },
-  },
-};
-</script>
-
-<style scoped>
-.black-text {
-  margin-top: 3rem !important;
-  min-height: 30rem;
-}
-.siema li {
-  font-size: 20px;
-  color: rgb(255, 0, 0);
-  display: inline;
-}
-.success {
-  font-size: 20px;
-  color: rgb(0, 255, 0);
-  display: inline;
-}
-</style>.post("/pushTournament", this.tournament)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
-  computed: {
-    checkform: function () {
-      // var t = true;
-      // Object.keys(this.tournament).forEach((key) => {
-      //   if (this.tournament[key] == "") t = false;
-      // });
-      // return t;
-      return true;
+      var t = true;
+      Object.keys(this.tournament).forEach((key) => {
+        if (this.tournament[key] == "") t = false;
+      });
+      return t;
     },
   },
 };

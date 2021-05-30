@@ -11,24 +11,25 @@
       </button>
 
       <br />
-      <div class="karty" v-for="n in 10" v-bind:key="n">
+      <div class="karty" v-for="tournament in tournaments" v-bind:key="tournament">
         <div class="jednakarta">
           <b-card
-            title="League of Legends "
-            img-src="http://koppej.me/images/lol.jpg"
+            :title = "tournament.game"
+            :img-src= "tournament.link"
             img-alt="Image"
             img-top
             tag="article"
             class="karta"
           >
-            <b-card-text> Turniej 5v5 w szkole 64 </b-card-text>
+            <b-card-text> {{tournament.title}} </b-card-text>
             <b-list-group flush>
-              <b-list-group-item>Nagroda: <b>100zł</b> </b-list-group-item>
-              <b-list-group-item>Data: <b>22/09/1995</b></b-list-group-item>
-              <b-list-group-item>Adres: <b> ul.Kossaka</b> </b-list-group-item>
+              <b-list-group-item>Nagroda: <b>{{tournament.prize}}</b> </b-list-group-item>
+              <b-list-group-item>Data: <b>{{tournament.date}}</b></b-list-group-item>
+              <b-list-group-item>Miasto: <b>{{tournament.city}}</b> </b-list-group-item>
+              <b-list-group-item>Ulica: <b>{{tournament.street}}</b> </b-list-group-item>
             </b-list-group>
 
-            <b-button variant="dark">Szczegóły Turnieju</b-button>
+            <b-button class = "bu" variant="dark">Szczegóły Turnieju</b-button>
           </b-card>
         </div>
       </div>
@@ -36,17 +37,40 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
+  
   components: {},
   beforeCreate: function () {
     // do body background w global.css
     document.body.className = "tournaments";
   },
   data() {
-    return {};
+    return {
+
+      tournaments: [],
+
+    };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+
+    axios
+      .post("/getTournaments")
+      .then((res) => {
+
+          res.data.forEach(el => {
+            this.tournaments.push(el);
+          });
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  },
+  methods: {
+    
+  },
 };
 </script>
 
@@ -63,7 +87,7 @@ export default {
 }
 .karta {
   margin: auto;
-
+  height:38rem;
   text-align: center;
 }
 
@@ -85,5 +109,18 @@ export default {
   display: inline-block;
   width: 18rem;
   margin: auto;
+}
+.bu{
+  position: absolute;
+right:    2rem;
+bottom:   1rem;
+
+}
+.bu:hover{
+  background-color: orange !important;
+}
+img{
+  max-width:3rem;
+  max-height:3rem;
 }
 </style>

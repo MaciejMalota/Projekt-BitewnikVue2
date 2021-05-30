@@ -137,10 +137,10 @@ export default {
                 "Token=" + response.data.jwt + ";" + expires + ";path=/";
               this.token = response.data.jwt;
               document.cookie =
-                "login=" + response.data.login + ";" + expires + ";path=/";
-              this.login = response.data.login;
+                "login=" + this.user.login + ";" + expires + ";path=/";
+              this.login = this.user.login;
 
-              this.$router.go();
+              this.$router.go(); // reload strony aby odpalił sie mounted
               this.success = "Witaj " + this.login + "!";
             }
           })
