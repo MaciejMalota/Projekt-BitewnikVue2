@@ -1,6 +1,6 @@
 <template>
   <div class="srodek">
-      <p v-for="suc in success" v-bind:key="suc" class="edyt">{{suc}}</p>
+    <p v-for="suc in success" v-bind:key="suc" class="edyt">{{ suc }}</p>
     <div v-for="(tournament, index) in tournaments" v-bind:key="index">
       <div class="karta">
         <div class="t1">
@@ -8,24 +8,42 @@
         </div>
         <div class="t2">
           <H2
-            >Title: <br /><input type="text" v-model="tournaments[index].title" />
+            >Title: <br /><input
+              type="text"
+              v-model="tournaments[index].title"
+            />
             <br />
             Date: <br /><input
               type="date"
               v-model="tournaments[index].date"
             /><br />
-            Time: <br /><input type="time" v-model="tournaments[index].time" /> <br />
-            City: <br /><input type="text" v-model="tournaments[index].city" /> <br />
-            Street: <br /><input type="text" v-model="tournaments[index].street"  />
+            Time: <br /><input type="time" v-model="tournaments[index].time" />
             <br />
-            Prize: <br /><input type="text" v-model="tournaments[index].prize"  /> <br />
+            City: <br /><input type="text" v-model="tournaments[index].city" />
+            <br />
+            Street: <br /><input
+              type="text"
+              v-model="tournaments[index].street"
+            />
+            <br />
+            Prize: <br /><input
+              type="text"
+              v-model="tournaments[index].prize"
+            />
+            <br />
             <button class="btn btn-primary" @click="change(index)">
               Change
             </button>
-            
           </H2>
         </div>
-        <div class="t3">Zapisani na turniej:</div>
+        <div class="t3">
+          Zapisani na turniej:
+          <div class="users" v-for="(person, i) in participants" v-bind:key="i">
+            <p v-if="person.tournament == tournament._id">
+              {{ person.user }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,7 +60,7 @@ export default {
     return {
       tournaments: [],
       success: [],
-      participants: []
+      participants: [],
     };
   },
   mounted() {
@@ -51,14 +69,12 @@ export default {
     axios
       .post("/mytour", x)
       .then((res) => {
-        var i = 0;
         res.data.forEach((el) => {
           if (el.game) {
-            el.date = el.date.replaceAll('/', "-");
+            el.date = el.date.replaceAll("/", "-");
             this.tournaments.push(el);
           } else {
-            this.participants.push(el[i]);
-            i++;
+            this.participants.push(el[0]);
           }
         });
       })
@@ -68,18 +84,18 @@ export default {
   },
   methods: {
     change: function (id) {
-        console.log(this.participants);
+      console.log(this.participants);
       axios
-      .post("/editTournament", this.tournaments[id])
-      .then((res) => {
+        .post("/editTournament", this.tournaments[id])
+        .then((res) => {
           this.success.push("Edytowano");
           setTimeout(() => {
-              this.success = [];
-            }, 2000);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+            this.success = [];
+          }, 2000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -146,9 +162,12 @@ button {
   height: 4rem;
   width: 8rem;
 }
-.edyt{
-    font-size: 5rem;
-    color: rgb(0, 255, 0);
-    display: inline;
+.edyt {
+  font-size: 5rem;
+  color: rgb(0, 255, 0);
+  display: inline;
+}
+.users {
+  color: blue;
 }
 </style>
