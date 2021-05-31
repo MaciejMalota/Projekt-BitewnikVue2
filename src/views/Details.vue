@@ -16,6 +16,9 @@
               >Data: <b>{{ this.tournament.date }}</b></b-list-group-item
             >
             <b-list-group-item
+              >Godzina: <b>{{ this.tournament.time }}</b>
+            </b-list-group-item>
+            <b-list-group-item
               >Miasto: <b>{{ this.tournament.city }}</b>
             </b-list-group-item>
             <b-list-group-item
