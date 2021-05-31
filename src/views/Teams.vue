@@ -1,5 +1,7 @@
 <template>
-  <div>aaaa</div>
+  <div class="klasa">
+    siema
+    </div>
 </template>
 <script>
 export default {

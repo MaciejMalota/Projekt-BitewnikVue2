@@ -55,7 +55,7 @@
             </ul>
           </p>
           <p class = "success" v-if="success.length">
-            <b><H2>Zarejestrowano pomyślnie!</H2></b>
+            <b><H2>Udało się stworzyć turniej!</H2></b>
           </p>
 
       <div class="text-center">
@@ -116,28 +116,52 @@ export default {
         if (this.tournament[key] == "") t = false;
       });
 
-      if(t == false){
+      if (t == false) {
         this.errors.push("Podaj wszystkie dane");
         return;
       }
 
-      if(this.tournament.Data){
+      if (this.tournament.Data) {
         var timestamp = Date.parse(this.tournament.Data);
         if (isNaN(timestamp) == true) {
           this.errors.push("Data w niepoprawnym formacie");
         }
+        if (timestamp < Date.now()) {
+          this.errors.push("Podróże w czasie nie istnieją");
+          console.log(timestamp);
+        } else if (timestamp < Date.now() + 86400000) {
+          this.errors.push("Do turnieju minimum jeden dzień");
+          console.log(timestamp);
+        }
+      }
+      var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(
+        this.tournament.Time
+      );
+      if (!isValid) {
+        this.errors.push("Podałeś złą godzinę");
       }
 
-      this.tournament.Data = this.tournament.Data.replaceAll("-","/");
-      
+      if (this.errors.length > 0) return;
+      this.tournament.Data = this.tournament.Data.replaceAll("-", "/");
       axios
         .post("/pushTournament", this.tournament)
         .then((response) => {
-          console.log(response);
+          this.success.push("Udało się stworzyć turniej!");
+          this.reset();
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    reset: function () {
+        
+        this.tournament.Chosen = "";
+        this.tournament.Title = "";
+        this.tournament.Prize = "";
+        this.tournament.Data = "";
+        this.tournament.Time = "";
+        this.tournament.Street = "";
+        this.tournament.City = "";
     },
   },
   computed: {

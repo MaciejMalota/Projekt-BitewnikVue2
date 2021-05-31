@@ -93,7 +93,7 @@ router.get('/getgames', async (req, res, next) => {
 
 router.post('/ver', async (req, res) => {
   var cookie = req.body[0];
-
+  
   try {
     var c = verifyToken(cookie);
     const status = 201
@@ -103,8 +103,7 @@ router.post('/ver', async (req, res) => {
   }
   catch (err) {
     const status = 401
-    const message = 'Unauthorized'
-    res.status(status).json({ message })
+    res.status(status).json({ status })
   }
 });
 
@@ -145,30 +144,94 @@ router.post('/login', async (req, res) => {
 
 router.post('/logout', async (req, res) => {
 
+  console.log("logout");
   res.status(201).send("hej");
 
 
 });
 
+router.post('/zapiszSie', async (req, res) => {
+
+  const mongo = await load('user-tournament');
+  try {
+    await mongo.insertOne({
+      user: req.body[1],
+      tournament: req.body[0]
+    });
+    res.status(201).send("Git");
+  }
+  catch (err) {
+    const status = 401
+    res.status(status).json({ message })
+  }
+
+
+
+});
 
 router.post('/getTournaments', async (req, res) => {
   const mongo = await load('tournaments');
-  
-  res.send(await mongo.find({}).toArray());
+  try {
+    var x = await mongo.find({}).toArray();
+    res.send(x);
+  }
+  catch (err) {
+    const status = 404
+    res.status(status).send("Bad");
+  }
+
+});
+
+router.post('/czyZapisano', async (req, res) => {
+  const mongo = await load('user-tournament');
+  var y = await mongo.find({ user: req.body[1], tournament: req.body[0] }).toArray();
+  console.log(y);
+  if (y.length > 0) res.status(201).send("Git");
+  else res.status(401).send("Bad");
 
 });
 
 
+router.post('/showDetails', async (req, res) => {
+  const mongo = await load('tournaments');
+  const mongo2 = await load('user-tournament');
+  
+
+  try {
+    var o_id = new mongodb.ObjectID(req.body[0]);
+    var x = await mongo.find({ '_id': o_id }).toArray();
+    var y = await mongo2.find({ user: req.body[1], tournament: req.body[0] }).toArray();
+    x.push(y);
+    res.send(x);
+  }
+  catch (err) {
+    const status = 401
+    res.status(status).send("Bad");
+  }
+});
+
+router.post('/getUser', async (req, res) => {
+  const mongo = await load('user');
+  try {
+    var x = await mongo.find({ login: req.body[0] }).toArray();
+    res.send(x);
+  }
+  catch (err) {
+    const status = 401
+    res.status(status).send("Bad");
+  }
+
+});
 
 router.post('/pushTournament', async (req, res) => {
 
   var link = "";
   const mongo = await load('tournaments'); // polaczenie z baza danych a konkretnie kolekcją
-  if(req.body.Chosen == "League Of Legends") link = 'https://static.wikia.nocookie.net/leagueoflegends/images/9/9a/League_of_Legends_Update_Logo_Concept_05.jpg/revision/latest/scale-to-width-down/250?cb=20191029062637';
-  if(req.body.Chosen == "Dota 2") link = 'https://static.antyweb.pl/uploads/2017/04/dota2_1-1420x670.jpg';
-  if(req.body.Chosen == "Smite") link = 'https://cdn.dlcompare.com/game_tetiere/upload/gameimage/file/7577.jpeg';
-  if(req.body.Chosen == "CS GO") link = 'https://geex.x-kom.pl/wp-content/uploads/2020/10/cs-go-logo.jpg';
-  
+  if (req.body.Chosen == "League Of Legends") link = 'https://i.pinimg.com/474x/16/51/ec/1651eccc4e4a518df1382241b3a7610f.jpg';
+  if (req.body.Chosen == "Dota 2") link = 'https://www.gry-online.pl/galeria/gry13/506128520d.jpg';
+  if (req.body.Chosen == "Smite") link = 'https://alternative.me/media/256/smite-icon-3yl1e87n7tmaqh0v-c.png';
+  if (req.body.Chosen == "CS GO") link = 'https://steamuserimages-a.akamaihd.net/ugc/920288714608362510/CB23A353333E40D05DEFFEF269B16415CC5D722B/';
+
 
   await mongo.insertOne({
     game: req.body.Chosen,

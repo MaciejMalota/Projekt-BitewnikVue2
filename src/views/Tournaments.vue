@@ -11,25 +11,34 @@
       </button>
 
       <br />
-      <div class="karty" v-for="tournament in tournaments" v-bind:key="tournament">
+      <div
+        class="karty"
+        v-for="(tournament, index) in tournaments"
+        v-bind:key="index"
+      >
         <div class="jednakarta">
           <b-card
-            :title = "tournament.game"
-            :img-src= "tournament.link"
-            img-alt="Image"
-            img-top
-            tag="article"
+            :title="tournament.game"
+            :img-src="tournament.link"
             class="karta"
           >
-            <b-card-text> {{tournament.title}} </b-card-text>
+            <b-card-text> {{ tournament.title }} </b-card-text>
             <b-list-group flush>
-              <b-list-group-item>Nagroda: <b>{{tournament.prize}}</b> </b-list-group-item>
-              <b-list-group-item>Data: <b>{{tournament.date}}</b></b-list-group-item>
-              <b-list-group-item>Miasto: <b>{{tournament.city}}</b> </b-list-group-item>
-              <b-list-group-item>Ulica: <b>{{tournament.street}}</b> </b-list-group-item>
+              <b-list-group-item
+                >Nagroda: <b>{{ tournament.prize }}</b>
+              </b-list-group-item>
+              <b-list-group-item
+                >Data: <b>{{ tournament.date }}</b></b-list-group-item
+              >
+              <b-list-group-item
+                >Miasto: <b>{{ tournament.city }}</b>
+              </b-list-group-item>
+              <b-list-group-item
+                >Ulica: <b>{{ tournament.street }}</b>
+              </b-list-group-item>
             </b-list-group>
 
-            <b-button class = "bu" variant="dark">Szczegóły Turnieju</b-button>
+            <b-button class="bu" variant="dark" :to="{ name: 'details', params: { tournamentId: tournament._id } }"> Szczegóły Turnieju </b-button>
           </b-card>
         </div>
       </div>
@@ -39,7 +48,6 @@
 <script>
 import axios from "axios";
 export default {
-  
   components: {},
   beforeCreate: function () {
     // do body background w global.css
@@ -47,29 +55,25 @@ export default {
   },
   data() {
     return {
-
       tournaments: [],
-
     };
   },
   mounted() {
-
     axios
       .post("/getTournaments")
       .then((res) => {
-
-          res.data.forEach(el => {
-            this.tournaments.push(el);
-          });
-
+        res.data.forEach((el) => {
+          this.tournaments.push(el);
+        });
       })
       .catch((error) => {
         console.log(error);
       });
-
   },
   methods: {
-    
+    topage: function (id) {
+      this.$router.push;
+    },
   },
 };
 </script>
@@ -87,8 +91,9 @@ export default {
 }
 .karta {
   margin: auto;
-  height:38rem;
+  height: 38rem;
   text-align: center;
+  width: 16rem;
 }
 
 .srodek {
@@ -110,17 +115,12 @@ export default {
   width: 18rem;
   margin: auto;
 }
-.bu{
+.bu {
   position: absolute;
-right:    2rem;
-bottom:   1rem;
-
+  right: 2rem;
+  bottom: 1rem;
 }
-.bu:hover{
+.bu:hover {
   background-color: orange !important;
-}
-img{
-  max-width:3rem;
-  max-height:3rem;
 }
 </style>

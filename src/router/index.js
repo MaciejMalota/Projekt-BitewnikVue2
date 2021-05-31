@@ -6,6 +6,9 @@ import Tournaments from '/src/views/Tournaments.vue'
 import Teams from '/src/views/Teams.vue'
 import addTournament from '/src/views/AddTournament.vue'
 import PageNotFound from '/src/views/PageNotFound.vue'
+import Details from '/src/views/Details.vue'
+import Logout from '/src/views/Logout.vue'
+import myTournaments from '/src/views/myTournaments.vue'
 import '/src/assets/css/global.css';
 Vue.use(VueRouter);
 
@@ -35,6 +38,16 @@ const routes = [
     component: Teams
   },
   {
+    path: '/mytournaments',
+    name: 'myTournaments',
+    component: myTournaments
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout
+  },
+  {
     path: '/addtournament',
     name: 'addTournament',
     component: addTournament,
@@ -42,11 +55,18 @@ const routes = [
       requiresRank: 2,
     }
   },
+  {
+    path: '/tournaments/:tournamentId/details',
+    name: 'details',
+    component: Details,
+    props: true,
+  },
   { 
     path: "/:pathMatch(.*)*", 
     component: PageNotFound,
     name: 'PageNotFound' 
-  }
+  },
+  
 ]
 
 

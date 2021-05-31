@@ -15,11 +15,17 @@
           @click="$router.push('/register').catch((err) => {})"
           ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item
         >
+
         <b-nav-item @click="$router.push('/tournaments').catch((err) => {})"
           ><i class="fa fa-sitemap" aria-hidden="true"></i>Turnieje</b-nav-item
         >
         <b-nav-item @click="$router.push('/teams').catch((err) => {})"
           ><i class="fa fa-user-plus" aria-hidden="true"></i>Drużyny</b-nav-item
+        >
+        <b-nav-item
+          @click="$router.push('/myTournaments').catch((err) => {})"
+          v-if="this.$root.right >= 2"
+          ><i class="fa fa-chess" aria-hidden="true"></i>Moje turnieje</b-nav-item
         >
         <!-- <b-nav-item-dropdown text="Konto" left>
         <b-dropdown-item href="#">Account</b-dropdown-item>
@@ -109,15 +115,7 @@ export default {
       axios
         .post("/logout")
         .then((response) => {
-          var cookies = document.cookie.split(";");
-
-          for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          }
-          this.$router.go();
+          this.$router.push("/logout");
         })
         .catch((error) => {
           // err
@@ -172,9 +170,7 @@ export default {
         document.cookie =
           "right=" + this.$root.right + ";" + expires + ";path=/";
       })
-      .catch((error) => {
-        console.log("err");
-      });
+      .catch((error) => {});
   },
 };
 </script>
