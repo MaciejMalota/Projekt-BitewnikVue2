@@ -142,7 +142,6 @@ export default {
       }
 
       if (this.errors.length > 0) return;
-      this.tournament.Data = this.tournament.Data.replaceAll("-", "/");
       axios
         .post("/pushTournament", this.tournament)
         .then((response) => {

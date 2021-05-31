@@ -40,7 +40,10 @@ const routes = [
   {
     path: '/mytournaments',
     name: 'myTournaments',
-    component: myTournaments
+    component: myTournaments,
+    meta: {
+      requiresRank: 2,
+    }
   },
   {
     path: '/logout',

@@ -93,7 +93,7 @@ router.get('/getgames', async (req, res, next) => {
 
 router.post('/ver', async (req, res) => {
   var cookie = req.body[0];
-  
+
   try {
     var c = verifyToken(cookie);
     const status = 201
@@ -169,6 +169,32 @@ router.post('/zapiszSie', async (req, res) => {
 
 });
 
+router.post('/mytour', async (req, res) => {
+  const mongo = await load('tournaments');
+  const mongo2 = await load('user-tournament');
+
+  try {
+    var x = [];
+    x = await mongo.find({ user: req.body[0] }).toArray();
+
+
+    var y = [];
+    for (var i = 0; i < x.length; i++) {
+      if (x[i]._id) {
+        y = await mongo2.find({ tournament: x[i]._id.toString() }).toArray();
+        if (y.length != 0) x.push(y);
+      }
+    }
+    res.send(x);
+  }
+  catch (err) {
+    console.log(err);
+    const status = 404
+    res.status(status).send("Bad");
+  }
+
+});
+
 router.post('/getTournaments', async (req, res) => {
   const mongo = await load('tournaments');
   try {
@@ -176,6 +202,38 @@ router.post('/getTournaments', async (req, res) => {
     res.send(x);
   }
   catch (err) {
+    const status = 404
+    res.status(status).send("Bad");
+  }
+
+});
+
+router.post('/editTournament', async (req, res) => {
+
+  const mongo = await load('tournaments');
+
+  try {
+    var o_id = new mongodb.ObjectID(req.body._id);
+    const filter = {'_id': o_id};
+    const options = { upsert: true };
+    const updateDoc = {
+      $set: {
+        game: req.body.game,
+        title: req.body.title,
+        prize: req.body.prize,
+        date: req.body.date,
+        time: req.body.time,
+        street: req.body.street,
+        city: req.body.city,
+        user: req.body.user,
+        link: req.body.link
+      },
+    };
+    const result = await mongo.updateOne(filter, updateDoc, options);
+    res.status(201).send("Git");
+  }
+  catch (err) {
+    console.log(err);
     const status = 404
     res.status(status).send("Bad");
   }
@@ -195,7 +253,7 @@ router.post('/czyZapisano', async (req, res) => {
 router.post('/showDetails', async (req, res) => {
   const mongo = await load('tournaments');
   const mongo2 = await load('user-tournament');
-  
+
 
   try {
     var o_id = new mongodb.ObjectID(req.body[0]);
