@@ -1,47 +1,66 @@
 <template>
   <div class="srodek">
+    <div class="cent">
+      <label><input type="checkbox" v-model="checkbox" /> Show Archive</label>
+    </div>
     <p v-for="suc in success" v-bind:key="suc" class="edyt">{{ suc }}</p>
     <div v-for="(tournament, index) in tournaments" v-bind:key="index">
-      <div class="karta">
-        <div class="t1">
-          <img :src="tournament.link" />
-        </div>
-        <div class="t2">
-          <H2
-            >Title: <br /><input
-              type="text"
-              v-model="tournaments[index].title"
-            />
-            <br />
-            Date: <br /><input
-              type="date"
-              v-model="tournaments[index].date"
-            /><br />
-            Time: <br /><input type="time" v-model="tournaments[index].time" />
-            <br />
-            City: <br /><input type="text" v-model="tournaments[index].city" />
-            <br />
-            Street: <br /><input
-              type="text"
-              v-model="tournaments[index].street"
-            />
-            <br />
-            Prize: <br /><input
-              type="text"
-              v-model="tournaments[index].prize"
-            />
-            <br />
-            <button class="btn btn-primary" @click="change(index)">
-              Change
-            </button>
-          </H2>
-        </div>
-        <div class="t3">
-          Zapisani na turniej:
-          <div class="users" v-for="(person, i) in participants" v-bind:key="i">
-            <p v-if="person.tournament == tournament._id">
-              {{ person.user }}
-            </p>
+      <div v-if="checkbox == tournament.archive">
+        <div class="karta">
+          <div class="t1">
+            <img :src="tournament.link" />
+          </div>
+          <div class="t2">
+            <H2
+              >Title: <br /><input
+                type="text"
+                v-model="tournaments[index].title"
+              />
+              <br />
+              Date: <br /><input
+                type="date"
+                v-model="tournaments[index].date"
+              /><br />
+              Time: <br /><input
+                type="time"
+                v-model="tournaments[index].time"
+              />
+              <br />
+              City: <br /><input
+                type="text"
+                v-model="tournaments[index].city"
+              />
+              <br />
+              Street: <br /><input
+                type="text"
+                v-model="tournaments[index].street"
+              />
+              <br />
+              Prize: <br /><input
+                type="text"
+                v-model="tournaments[index].prize"
+              />
+              <br />
+              <button class="btn btn-primary" @click="change(index)">
+                Change
+              </button>
+            </H2>
+          </div>
+          <div class="t3">
+            Zapisani na turniej:
+            <div
+              class="users"
+              v-for="(person, i) in participants"
+              v-bind:key="i"
+            >
+              <router-link
+                :to="{ name: 'user', params: { userId: person.user } }"
+              >
+                <p v-if="person.tournament == tournament._id">
+                  {{ person.user }}
+                </p>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -61,6 +80,7 @@ export default {
       tournaments: [],
       success: [],
       participants: [],
+      checkbox: false,
     };
   },
   mounted() {
@@ -72,6 +92,16 @@ export default {
         res.data.forEach((el) => {
           if (el.game) {
             el.date = el.date.replaceAll("/", "-");
+
+            var myDate = el.date;
+            myDate = myDate.split("-");
+            var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
+            if (newDate.getTime() < Date.now()) {
+              el.archive = true;
+            } else {
+              el.archive = false;
+            }
+
             this.tournaments.push(el);
           } else {
             this.participants.push(el[0]);
@@ -127,6 +157,7 @@ export default {
   min-width: 24rem;
   min-height: 90vh;
   padding: 3rem;
+  padding-top: 0px !important;
   background: #5c3e3eb3;
   -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
@@ -169,5 +200,8 @@ button {
 }
 .users {
   color: blue;
+}
+.cent {
+  text-align: center;
 }
 </style>

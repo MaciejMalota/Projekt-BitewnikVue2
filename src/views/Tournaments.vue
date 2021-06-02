@@ -28,7 +28,7 @@
                 >Nagroda: <b>{{ tournament.prize }}</b>
               </b-list-group-item>
               <b-list-group-item
-                >Data: <b>{{ tournament.date }}</b></b-list-group-item
+                >Data turnieju: <b>{{ tournament.date }}</b></b-list-group-item
               >
               <b-list-group-item
                 >Miasto: <b>{{ tournament.city }}</b>
@@ -36,9 +36,21 @@
               <b-list-group-item
                 >Ulica: <b>{{ tournament.street }}</b>
               </b-list-group-item>
+              <b-list-group-item
+                >Zapisy do: <b>{{ tournament.end }}</b>
+              </b-list-group-item>
             </b-list-group>
 
-            <b-button class="bu" variant="dark" :to="{ name: 'details', params: { tournamentId: tournament._id } }"> Szczegóły Turnieju </b-button>
+            <b-button
+              class="bu"
+              variant="dark"
+              :to="{
+                name: 'details',
+                params: { tournamentId: tournament._id },
+              }"
+            >
+              Szczegóły Turnieju
+            </b-button>
           </b-card>
         </div>
       </div>
@@ -63,7 +75,15 @@ export default {
       .post("/getTournaments")
       .then((res) => {
         res.data.forEach((el) => {
-          this.tournaments.push(el);
+          var myDate = el.date;
+          myDate = myDate.split("-");
+          var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
+          var myDate2 = el.end;
+          myDate2 = myDate2.split("-");
+          var newDate2 = new Date(myDate2[0], myDate2[1] - 1, myDate2[2]);
+
+          if ((newDate.getTime() > Date.now()) && (newDate2.getTime() > Date.now()) ) this.tournaments.push(el);
+
         });
       })
       .catch((error) => {

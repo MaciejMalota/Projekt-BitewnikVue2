@@ -24,6 +24,9 @@
             <b-list-group-item
               >Ulica: <b>{{ this.tournament.street }}</b>
             </b-list-group-item>
+            <b-list-group-item
+              >Zapisy do: <b>{{ this.tournament.end }}</b>
+            </b-list-group-item>
           </b-list-group>
 
           <div v-if="this.$root.login">
@@ -35,6 +38,9 @@
             <div v-else>
               <b-button class="bu" variant="dark" @click="signIn">
                 Zapisz się
+              </b-button>
+              <b-button class="bu" variant="dark" @click="signAsTeam">
+                Zapisz się jako drużyna
               </b-button>
             </div>
           </div>
@@ -83,7 +89,6 @@ export default {
   beforeCreate: function () {
     // do body background w global.css
     document.body.className = "tournaments";
-    
   },
   props: ["tournamentId"],
   data() {
@@ -106,7 +111,7 @@ export default {
       .post("/showDetails", y)
       .then((res) => {
         this.tournament = res.data[0];
-        if(res.data[1].length > 0){
+        if (res.data[1].length > 0) {
           this.zapisano = true;
         }
       })

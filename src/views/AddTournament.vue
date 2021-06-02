@@ -34,7 +34,7 @@
         label="Godzina rozpoczęcia"
         v-model="tournament.Time"
         icon="clock"
-        type="text"
+        type="time"
       />
       <mdb-input
         label="Ulica"
@@ -47,6 +47,12 @@
         v-model="tournament.City"
         icon="city"
         type="text"
+      />
+      <mdb-input
+        label="Dzień zakończenia zapisów"
+        v-model="tournament.Zakonczenie"
+        icon="sign"
+        type="date"
       />
       <p class = "siema" v-if="errors.length">
             <b><H2>W formularzu pojawiły się błędy:</H2></b>
@@ -77,12 +83,13 @@ export default {
       Games: [],
       tournament: {
         Chosen: "",
-        Title: "qwe",
-        Prize: "ewe",
+        Title: "",
+        Prize: "",
         Data: "",
-        Time: "qwe",
-        Street: "qwe",
-        City: "qwe",
+        Time: "",
+        Street: "",
+        City: "",
+        Zakonczenie: "",
         User: this.$cookies.get("login"),
         //   regulamin:
       },
@@ -128,12 +135,11 @@ export default {
         }
         if (timestamp < Date.now()) {
           this.errors.push("Podróże w czasie nie istnieją");
-          console.log(timestamp);
         } else if (timestamp < Date.now() + 86400000) {
           this.errors.push("Do turnieju minimum jeden dzień");
-          console.log(timestamp);
         }
       }
+
       var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(
         this.tournament.Time
       );
@@ -141,6 +147,23 @@ export default {
         this.errors.push("Podałeś złą godzinę");
       }
 
+      var myDate = this.tournament.Data;
+          myDate = myDate.split("-");
+      var myDate2 = this.tournament.Zakonczenie;
+          myDate2 = myDate2.split("-");
+      var newDate = new Date(myDate[0], myDate[1] - 1, myDate[2]);
+      var newDate2 = new Date(myDate2[0], myDate2[1] - 1, myDate2[2]);
+      
+      if((newDate.getTime() != newDate2.getTime()) && (newDate.getTime() < newDate2.getTime()) ){
+        this.errors.push("Podałeś złą datę zakończenia");
+
+      }
+
+      timestamp = Date.parse(this.tournament.Data2);
+        if (timestamp < Date.now()) {
+          this.errors.push("Podróże w czasie nie istnieją");
+        }
+      
       if (this.errors.length > 0) return;
       axios
         .post("/pushTournament", this.tournament)
@@ -153,14 +176,9 @@ export default {
         });
     },
     reset: function () {
-        
-        this.tournament.Chosen = "";
-        this.tournament.Title = "";
-        this.tournament.Prize = "";
-        this.tournament.Data = "";
-        this.tournament.Time = "";
-        this.tournament.Street = "";
-        this.tournament.City = "";
+        Object.keys(this.tournament).forEach((key) => {
+        this.tournament[key] = "";
+      });
     },
   },
   computed: {
@@ -187,7 +205,7 @@ export default {
 }
 .success {
   font-size: 20px;
-  color: rgb(0, 255, 0);
+  color: rgb(0, 0, 0);
   display: inline;
 }
 </style>

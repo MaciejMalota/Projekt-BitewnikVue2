@@ -11,7 +11,8 @@
 
         <mdb-input label="Twój e-mail" v-model ="user.email" icon="envelope" type="email"/>
         <mdb-input label="Twoje hasło" v-model ="user.haslo" icon="lock" type="password"/>
-        <mdb-input label="Potwierdź hasło" v-model ="user.haslo2" icon="lock" type="password"/>
+        <mdb-input label="Twój telefon" v-model ="user.nrtel" icon="phone" type="phone"/>
+        <mdb-input label="Potwierdź hasło" v-model ="user.haslo2" icon="lock" type="tel"/>
         <mdb-input label="Miasto" v-model ="user.miasto" icon="fas fa-city" type="text"/>
         <mdb-input type="checkbox" id="checkbox2" name="check2" v-model="user.regulamin" label="Akceptuję regulamin serwisu"/>
 
@@ -50,14 +51,15 @@ export default {
       errors: [],
       success: [],
       user: {
-        imie: "Patryk",
-        nazwisko: "Jankowski",
-        login: "lasek",
-        data: "1998/11/30",
-        email: "Adamjerzy@wp.pl",
-        haslo: "qwerty",
-        haslo2: "qwerty",
-        miasto: "Nysa",
+        imie: "",
+        nazwisko: "",
+        login: "",
+        data: "",
+        email: "",
+        haslo: "",
+        haslo2: "",
+        miasto: "",
+        nrtel: "",
         regulamin: true,
       },
     };
@@ -87,7 +89,13 @@ export default {
       } else if (this.user.login > 5) {
         this.errors.push("Login musi mieć conajmniej 5 znaków");
       }
-
+      if(!this.user.nrtel){
+        this.errors.push("Podaj numer telefonu");
+      }
+      else{
+        var re = /[0-9]{9}/;
+        if(!re.test(this.user.nrtel))this.errors.push("Podaj poprawny numer");
+      }
       if (!this.user.data) {
         this.errors.push("Podaj datę urodzenia");
       } else {
@@ -155,6 +163,7 @@ export default {
       this.user.miasto = "";
       this.user.regulamin = false;
       this.user.email = "";
+      this.user.nrtel = "";
     },
     validEmail: function (email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

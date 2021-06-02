@@ -9,6 +9,7 @@ import PageNotFound from '/src/views/PageNotFound.vue'
 import Details from '/src/views/Details.vue'
 import Logout from '/src/views/Logout.vue'
 import myTournaments from '/src/views/myTournaments.vue'
+import User from '/src/views/User.vue'
 import '/src/assets/css/global.css';
 Vue.use(VueRouter);
 
@@ -25,7 +26,7 @@ const routes = [
     meta: {
       requiresVisitor: true,
     }
-    
+
   },
   {
     path: '/tournaments',
@@ -59,17 +60,26 @@ const routes = [
     }
   },
   {
+    path: '/user/:userId',
+    name: 'user',
+    component: User,
+    props: true,
+    meta: {
+      requiresRank: 2,
+    }
+  },
+  {
     path: '/tournaments/:tournamentId/details',
     name: 'details',
     component: Details,
     props: true,
   },
-  { 
-    path: "/:pathMatch(.*)*", 
+  {
+    path: "/:pathMatch(.*)*",
     component: PageNotFound,
-    name: 'PageNotFound' 
+    name: 'PageNotFound'
   },
-  
+
 ]
 
 

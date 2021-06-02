@@ -43,6 +43,7 @@ router.post('/register', async (req, res) => {
     email: req.body.email,
     haslo: pas,
     miasto: req.body.miasto,
+    tel: req.body.nrtel,
     right: 0
   });
 
@@ -300,6 +301,7 @@ router.post('/pushTournament', async (req, res) => {
     street: req.body.Street,
     city: req.body.City,
     user: req.body.User,
+    end: req.body.Zakonczenie,
     link: link
   });
 

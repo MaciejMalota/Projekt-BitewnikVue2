@@ -12,33 +12,34 @@
         class="karuzela"
       >
         <b-carousel-slide
-          caption="First slide"
-          img-src="https://picsum.photos/1024/480/?image=10"
+          img-src="https://muvi.com/wp-content/uploads/2019/04/eSports-Future-OTT-Streaming.jpg"
         ></b-carousel-slide>
         <b-carousel-slide
-          caption="Second Slide"
-          img-src="https://picsum.photos/1024/480/?image=12"
+          img-src="https://technologiczna.pl/wp-content/uploads/2016/11/esports-betting.jpg"
         ></b-carousel-slide>
         <b-carousel-slide
-          caption="Third Slide"
-          img-src="https://picsum.photos/1024/480/?image=22"
+          img-src="https://kyleedwardshelley.com/wp-content/uploads/2021/02/E-Sports.jpg"
         ></b-carousel-slide>
       </b-carousel>
     </div>
     <div class="drugi">
-      <H2>drugi element</H2>
-    </div>
+      <img src="https://www.fifplay.com/img/public/big-gaming-competition.jpg" alt="" class="src">
+      </div>
     <div class="trzeci">
-      <H2>trzeci element</H2>
+       <img src="https://i.pinimg.com/originals/6a/fe/fc/6afefc6debb4e0e3e9fbcdac73fdbaed.jpg" alt="" class="src">
+     
     </div>
     <div class="czwarty">
-      <H2>czwarty element</H2>
+      <img src="https://planetagracza.pl/wp-content/uploads/2020/11/lol-wild-rift-pg.jpg" alt="" class="src">
+     
     </div>
     <div class="piaty">
-      <H2>piaty element</H2>
+     <img src="https://www.kawerna.pl/wp-content/uploads/2016/10/esportwow.jpg" alt="" class="src">
+     
     </div>
     <div class="szosty">
-      <H2>szosty element</H2>
+      <img src="https://wallpaperaccess.com/full/1077769.jpg" alt="" class="src">
+     
     </div>
   </div>
 </template>
@@ -58,40 +59,43 @@ export default {
   width: 80%;
   margin: auto;
   height: 100%;
-  margin-top: 5rem;
-  border: solid 20px;
+  /* margin-top: 5rem; */
+  /* border: solid 20px; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(230px, auto);
+  grid-auto-rows: minmax(0px, auto);
 }
 .t1 {
-  border: solid 4px;
+  /* border: solid 4px; */
   grid-column: 1 / 3;
   grid-row: 1 / 3;
 }
 .drugi {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
-  border: solid 4px;
+  /* border: solid 4px; */
 }
 .trzeci {
-  border: solid 4px;
+  /* border: solid 4px; */
   grid-column: 3 / 4;
   grid-row: 2 / 3;
 }
 .czwarty {
-  border: solid 4px;
+  /* border: solid 4px; */
   grid-column: 1;
   grid-row: 3;
 }
 .piaty {
-  border: solid 4px;
+  /* border: solid 4px; */
   grid-column: 2;
   grid-row: 3;
 }
 .szosty {
-  border: solid 4px;
+  /* border: solid 4px; */
   grid-column: 3;
   grid-row: 3;
+}
+img{
+  height:18rem;
 }
 </style>
