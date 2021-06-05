@@ -10,6 +10,7 @@ import Details from '/src/views/Details.vue'
 import Logout from '/src/views/Logout.vue'
 import myTournaments from '/src/views/myTournaments.vue'
 import User from '/src/views/User.vue'
+import AddTeam from '/src/views/AddTeam.vue'
 import '/src/assets/css/global.css';
 Vue.use(VueRouter);
 
@@ -25,6 +26,15 @@ const routes = [
     component: Register,
     meta: {
       requiresVisitor: true,
+    }
+
+  },
+  {
+    path: '/addteam',
+    name: 'AddTeam',
+    component: AddTeam,
+    meta: {
+      requiresRank: 2,
     }
 
   },

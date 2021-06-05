@@ -1,7 +1,7 @@
 <template>
   <div class="srodek">
     <div class="holder">
-      <div v-if="this.check">
+      <div v-if="this.check == 'text'">
         <b-card
           :title="this.tournament.game"
           :img-src="this.tournament.link"
@@ -35,6 +35,7 @@
                 Jesteś już zapisany
               </b-button>
             </div>
+           
             <div v-else>
               <b-button class="bu" variant="dark" @click="signIn">
                 Zapisz się
@@ -51,6 +52,10 @@
           </div>
         </b-card>
       </div>
+       <div v-else-if="this.check == 'Team'">
+        <AddTeam></AddTeam>
+
+       </div>
       <div class="form" v-else>
         <H1
           >Zapisujesz się do turnieju: {{ tournament.title }}<br />
@@ -120,6 +125,9 @@ export default {
       });
   },
   methods: {
+    signAsTeam: function(){
+        this.check = "Team";
+    },
     signIn: function () {
       this.check = "";
       var cred = [];
