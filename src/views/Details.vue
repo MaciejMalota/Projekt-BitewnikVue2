@@ -140,7 +140,6 @@ export default {
       credentials: [],
       zapisano: false,
       users: [],
-      allusers: [],
       players: [this.$cookies.get("login")],
     };
   },
@@ -167,12 +166,11 @@ export default {
         const filtered = res.data.users.filter((item) => {
             return item != this.$cookies.get("login");
           });
-        this.users[0] = filtered;
+
         this.users[1] = filtered;
         this.users[2] = filtered;
         this.users[3] = filtered;
         this.users[4] = filtered;
-        this.allusers = filtered;
       })
       .catch((error) => {
         console.log(error);

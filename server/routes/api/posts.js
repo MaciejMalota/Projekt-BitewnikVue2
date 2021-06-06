@@ -192,6 +192,26 @@ router.post('/zapiszSie', async (req, res) => {
 
 });
 
+router.post('/getid', async (req, res) => {
+
+  const mongo = await load('user');
+  try {
+    await mongo.insertOne({
+      user: req.body[1],
+      tournament: req.body[0]
+    });
+    res.status(201).send("Git");
+  }
+  catch (err) {
+    const status = 401
+    res.status(status).json({ message })
+  }
+
+
+
+});
+
+
 router.post('/mytour', async (req, res) => {
   const mongo = await load('tournaments');
   const mongo2 = await load('user-tournament');
@@ -205,10 +225,12 @@ router.post('/mytour', async (req, res) => {
     for (var i = 0; i < x.length; i++) {
       if (x[i]._id) {
         y = await mongo2.find({ tournament: x[i]._id.toString() }).toArray();
+
         if (y.length != 0) x.push(y);
       }
     }
     res.send(x);
+
   }
   catch (err) {
     console.log(err);

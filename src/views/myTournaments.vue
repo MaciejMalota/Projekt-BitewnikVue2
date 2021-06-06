@@ -86,6 +86,7 @@ export default {
   mounted() {
     var x = [];
     x.push(this.$cookies.get("login"));
+    var part = [];
     axios
       .post("/mytour", x)
       .then((res) => {
@@ -105,16 +106,20 @@ export default {
             this.tournaments.push(el);
           } else {
             this.participants.push(el[0]);
+            console.log(el[1].user[0]);
+
+
           }
         });
       })
       .catch((error) => {
         console.log(error);
       });
+
+
   },
   methods: {
     change: function (id) {
-      console.log(this.participants);
       axios
         .post("/editTournament", this.tournaments[id])
         .then((res) => {
