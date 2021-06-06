@@ -92,6 +92,28 @@ router.get('/getgames', async (req, res, next) => {
 
 });
 
+router.post('/userTournament', async (req, res, next) => {
+
+  const ga = await load('user');
+  const games = await ga.find({}).toArray();
+  var users = [];
+  games.forEach((item)=>{
+    users.push(item.login);
+  })
+
+  if (games) {
+
+    const status = 201
+    res.status(status).json({ status, users })
+
+  } else {
+    const status = 401
+    res.status(status).json({ status })
+
+  }
+
+});
+
 router.post('/ver', async (req, res) => {
   var cookie = req.body[0];
 
@@ -250,13 +272,28 @@ router.post('/czyZapisano', async (req, res) => {
 
 });
 
+router.post('/zapiszDruzyne', async (req, res) => {
+
+  console.log(req.body[0],req.body[1],req.body[2]);
+  const mongo = await load('user-tournament');
+  try {
+    await mongo.insertOne({ user: req.body[1], tournament: req.body[0], teamname: req.body[2]});
+    res.status(201).send("Git");
+  }
+  catch (err) {
+    const status = 401
+    res.status(status).json({ message })
+  }
+
+});
 
 router.post('/showDetails', async (req, res) => {
-  const mongo = await load('tournaments');
-  const mongo2 = await load('user-tournament');
-
+  
 
   try {
+    const mongo = await load('tournaments');
+    const mongo2 = await load('user-tournament');
+
     var o_id = new mongodb.ObjectID(req.body[0]);
     var x = await mongo.find({ '_id': o_id }).toArray();
     var y = await mongo2.find({ user: req.body[1], tournament: req.body[0] }).toArray();

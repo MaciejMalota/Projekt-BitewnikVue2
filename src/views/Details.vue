@@ -35,7 +35,7 @@
                 Jesteś już zapisany
               </b-button>
             </div>
-           
+
             <div v-else>
               <b-button class="bu" variant="dark" @click="signIn">
                 Zapisz się
@@ -52,10 +52,41 @@
           </div>
         </b-card>
       </div>
-       <div v-else-if="this.check == 'Team'">
-        
-
-       </div>
+      <div v-else-if="this.check == 'Team'">
+        <H1
+          >Zapisujesz się do turnieju: {{ tournament.title }}<br />
+          Podaj nazwę drużyny<br />
+          <input v-model="nazwadruzyny" type="text" /><br />
+          Dodaj graczy do drużyny:<br />
+          <div v-for="index in 4" v-bind:key="index">
+            Gracz {{ index }}:
+            <select
+              class="form-select"
+              v-model="players[index ]"
+              aria-label="Default select example"
+              @change="update(index)"
+            >
+              <option selected disabled value="">--Dodaj gracza--</option>
+              <option v-for="user in users[index]" v-bind:key="user">
+                {{ user }}
+              </option>
+            </select>
+          </div>
+          Gracz 5 : {{this.$cookies.get("login")}}<br/>
+          <label
+            ><input type="checkbox" v-model="regulamin" class="cb" /> Akceptuję
+            <a href="https://www.lipsum.com/">regulamin</a> turnieju</label
+          >
+          <b-button
+          class="butt"
+          variant="success"
+          :disabled="!checkAll"
+          @click="zapiszDruzyne"
+        >
+          Zapisz drużynę
+        </b-button>
+        </H1>
+      </div>
       <div class="form" v-else>
         <H1
           >Zapisujesz się do turnieju: {{ tournament.title }}<br />
@@ -89,6 +120,7 @@
 </template>
 <script>
 import axios from "axios";
+
 export default {
   components: {},
   beforeCreate: function () {
@@ -99,6 +131,7 @@ export default {
   data() {
     return {
       id: this.tournamentId,
+      nazwadruzyny: "",
       tournament: "",
       notAdult: false,
       check: "text",
@@ -106,6 +139,9 @@ export default {
       regulamin: false,
       credentials: [],
       zapisano: false,
+      users: [],
+      allusers: [],
+      players: [this.$cookies.get("login")],
     };
   },
   mounted() {
@@ -123,10 +159,41 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+
+    axios
+      .post("/userTournament", y)
+      .then((res) => {
+        var c = res.data.users.values;
+        const filtered = res.data.users.filter((item) => {
+            return item != this.$cookies.get("login");
+          });
+        this.users[0] = filtered;
+        this.users[1] = filtered;
+        this.users[2] = filtered;
+        this.users[3] = filtered;
+        this.users[4] = filtered;
+        this.allusers = filtered;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   methods: {
-    signAsTeam: function(){
-        this.check = "Team";
+    update: function (index) {
+
+      for (var i = 1; i < 5; i++) {
+
+        if (i != index) {
+          const filtered = this.users[i].filter((item) => {
+            return item != this.players[index];
+          });
+          this.users[i] = filtered;
+        }
+
+      }
+    },
+    signAsTeam: function () {
+      this.check = "Team";
     },
     signIn: function () {
       this.check = "";
@@ -156,12 +223,37 @@ export default {
           console.log(error);
         });
     },
+    zapiszDruzyne: function () {
+      var cred = [];
+        cred.push(this.id);
+        cred.push(this.players);
+        cred.push(this.nazwadruzyny);
+        console.log(cred);
+        axios
+          .post("/zapiszDruzyne", cred)
+          .then((res) => {
+            this.$router.push("/Tournaments");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
   },
   computed: {
     allCheck: function () {
       var t = true;
       if (this.regulamin == false) t = false;
       if (this.notAdult) if (!this.checkbox) t = false;
+      return t;
+    },
+    checkAll: function () {
+      var t = true;
+      if (this.regulamin == false) t = false;
+      if(this.nazwadruzyny == "") t = false;
+      if(!this.players[1]) t = false;
+      if(!this.players[2]) t = false;
+      if(!this.players[3]) t = false;
+      if(!this.players[4]) t = false;
       return t;
     },
   },
