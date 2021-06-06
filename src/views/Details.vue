@@ -53,7 +53,7 @@
         </b-card>
       </div>
        <div v-else-if="this.check == 'Team'">
-        <AddTeam></AddTeam>
+        
 
        </div>
       <div class="form" v-else>
