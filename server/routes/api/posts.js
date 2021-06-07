@@ -192,24 +192,6 @@ router.post('/zapiszSie', async (req, res) => {
 
 });
 
-router.post('/getid', async (req, res) => {
-
-  const mongo = await load('user');
-  try {
-    await mongo.insertOne({
-      user: req.body[1],
-      tournament: req.body[0]
-    });
-    res.status(201).send("Git");
-  }
-  catch (err) {
-    const status = 401
-    res.status(status).json({ message })
-  }
-
-
-
-});
 
 
 router.post('/mytour', async (req, res) => {
@@ -372,13 +354,14 @@ router.post('/pushTournament', async (req, res) => {
 
 
 async function load(t) {
+  
   const client = await mongodb.MongoClient.connect(
     'mongodb+srv://lasek:lasek123@cluster0.8f7wo.mongodb.net/test',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
     }
-  );
+  ).catch((err) => console.log(err));
 
   return client.db('bitewnik').collection(t);
 }

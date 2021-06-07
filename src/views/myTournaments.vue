@@ -61,6 +61,20 @@
                 </p>
               </router-link>
             </div>
+            <div class="teams" v-for="(team, i) in teams" v-bind:key="i">
+              <div v-if="team.tournament == tournament._id">
+                <div v-if="i == 0">
+                  Teams:<br /><strong>{{ team.teamname }}:</strong>
+                </div>
+              </div>
+              <router-link
+                :to="{ name: 'user', params: { userId: team.user } }"
+              >
+                <div v-if="team.tournament == tournament._id">
+                  <p>{{ team.user }}</p>
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -80,6 +94,7 @@ export default {
       tournaments: [],
       success: [],
       participants: [],
+      teams: [],
       checkbox: false,
     };
   },
@@ -105,18 +120,25 @@ export default {
 
             this.tournaments.push(el);
           } else {
-            this.participants.push(el[0]);
-            console.log(el[1].user[0]);
-
-
+            for (var c = 0; c < el.length; c++) {
+              if (el[c].teamname)
+                for (var i = 0; i < el[c].user.length; i++) {
+                  var obj = {
+                    user: el[c].user[i],
+                    tournament: el[c].tournament,
+                    teamname: el[c].teamname,
+                  };
+                  this.teams.push(obj);
+                  console.log(el[0].user);
+                }
+              else this.participants.push(el[c]);
+            }
           }
         });
       })
       .catch((error) => {
         console.log(error);
       });
-
-
   },
   methods: {
     change: function (id) {
