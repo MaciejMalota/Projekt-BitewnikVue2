@@ -60,7 +60,7 @@ export default {
         haslo2: "",
         miasto: "",
         nrtel: "",
-        regulamin: true,
+        regulamin: false,
       },
     };
   },
