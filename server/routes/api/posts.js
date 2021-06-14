@@ -356,7 +356,8 @@ router.post('/pushTournament', async (req, res) => {
 async function load(t) {
   
   const client = await mongodb.MongoClient.connect(
-    'mongodb+srv://lasek:lasek123@cluster0.8f7wo.mongodb.net/test',
+    '
+',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
