@@ -326,7 +326,7 @@ router.post('/pushTournament', async (req, res) => {
 async function load(t) {
   
   const client = await mongodb.MongoClient.connect(
-    
+    //link do moongo -> '',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true

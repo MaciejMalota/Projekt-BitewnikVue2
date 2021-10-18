@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '/src/views/Home.vue'
 import Register from '/src/views/Register.vue'
-import Tournaments from '/src/views/Tournaments.vue'
-import Teams from '/src/views/Teams.vue'
+import Encyclopedia from '/src/views/Encyclopedia.vue'
+import Top10 from '/src/views/Top10.vue'
 import addTournament from '/src/views/AddTournament.vue'
 import PageNotFound from '/src/views/PageNotFound.vue'
 import Details from '/src/views/Details.vue'
@@ -29,14 +29,14 @@ const routes = [
 
   },
   {
-    path: '/tournaments',
-    name: 'Tournaments',
-    component: Tournaments
+    path: '/encyclopedia',
+    name: 'Encyclopedia',
+    component: Encyclopedia
   },
   {
-    path: '/teams',
-    name: 'Teams',
-    component: Teams
+    path: '/top10',
+    name: 'Top10',
+    component: Top10
   },
   {
     path: '/mytournaments',

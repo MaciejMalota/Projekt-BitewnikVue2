@@ -16,17 +16,13 @@
           ><i class="fas fa-keyboard"></i>Zarejestruj</b-nav-item
         >
 
-        <b-nav-item @click="$router.push('/tournaments').catch((err) => {})"
-          ><i class="fa fa-sitemap" aria-hidden="true"></i>Turnieje</b-nav-item
+        <b-nav-item @click="$router.push('/encyclopedia').catch((err) => {})"
+          ><i class="fa fa-sitemap" aria-hidden="true"></i>Encyklopedia</b-nav-item
         >
-        <b-nav-item @click="$router.push('/teams').catch((err) => {})"
-          ><i class="fa fa-user-plus" aria-hidden="true"></i>Drużyny</b-nav-item
+        <b-nav-item @click="$router.push('/top10').catch((err) => {})"
+          ><i class="fa fa-user-plus" aria-hidden="true"></i>Top10</b-nav-item
         >
-        <b-nav-item
-          @click="$router.push('/myTournaments').catch((err) => {})"
-          v-if="this.$root.right >= 2"
-          ><i class="fa fa-chess" aria-hidden="true"></i>Moje turnieje</b-nav-item
-        >
+      
         <!-- <b-nav-item-dropdown text="Konto" left>
         <b-dropdown-item href="#">Account</b-dropdown-item>
         <b-dropdown-item href="#">Settings</b-dropdown-item>
