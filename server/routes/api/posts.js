@@ -173,24 +173,7 @@ router.post('/logout', async (req, res) => {
 
 });
 
-router.post('/zapiszSie', async (req, res) => {
 
-  const mongo = await load('user-tournament');
-  try {
-    await mongo.insertOne({
-      user: req.body[1],
-      tournament: req.body[0]
-    });
-    res.status(201).send("Git");
-  }
-  catch (err) {
-    const status = 401
-    res.status(status).json({ message })
-  }
-
-
-
-});
 
 
 
@@ -276,20 +259,7 @@ router.post('/czyZapisano', async (req, res) => {
 
 });
 
-router.post('/zapiszDruzyne', async (req, res) => {
 
-  console.log(req.body[0],req.body[1],req.body[2]);
-  const mongo = await load('user-tournament');
-  try {
-    await mongo.insertOne({ user: req.body[1], tournament: req.body[0], teamname: req.body[2]});
-    res.status(201).send("Git");
-  }
-  catch (err) {
-    const status = 401
-    res.status(status).json({ message })
-  }
-
-});
 
 router.post('/showDetails', async (req, res) => {
   
@@ -356,8 +326,7 @@ router.post('/pushTournament', async (req, res) => {
 async function load(t) {
   
   const client = await mongodb.MongoClient.connect(
-    '
-',
+    
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
